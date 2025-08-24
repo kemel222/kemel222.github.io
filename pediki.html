@@ -3,258 +3,330 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POMSK - POD системы и жидкости</title>
+    <title>POD Systems & Liquids</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --main-bg-color: #0a0a0a;
-            --card-bg-color: #1a1a1a;
-            --accent-color: #ff3c78;
-            --text-color: #ffffff;
-            --secondary-text: #cccccc;
-            --delivery-color: #4CAF50;
-            --cart-badge: #ff0000;
+            --primary-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --accent: #4361ee;
+            --accent-hover: #3a56d4;
+            --delivery-color: #2ecc71;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
         }
-        
+
+        .dark-theme {
+            --primary-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-primary: #e6e6e6;
+            --text-secondary: #a0a0a0;
+            --accent: #5f7fff;
+            --accent-hover: #4d6bf1;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            transition: var(--transition);
         }
-        
+
         body {
-            background-color: var(--main-bg-color);
-            color: var(--text-color);
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
             line-height: 1.6;
             padding: 0;
             margin: 0;
             min-height: 100vh;
+            transition: background-color 0.5s ease;
         }
-        
+
         .container {
-            max-width: 100%;
+            max-width: 1200px;
             padding: 15px;
             margin: 0 auto;
-            padding-bottom: 70px; /* Для корзины */
+            padding-bottom: 80px;
         }
-        
+
+        /* Header */
         header {
-            text-align: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #333;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: '';
-            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-color), #ff8a00, var(--accent-color));
-            background-size: 200% 200%;
-            animation: gradientMove 3s ease infinite;
+            background-color: var(--primary-bg);
+            z-index: 100;
+            transition: var(--transition);
         }
-        
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        .dark-theme header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .logo {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--text-color);
-            text-transform: uppercase;
-            letter-spacing: 3px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 15px;
+            padding-left: 45px;
+            border: none;
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg);
+        }
+
+        /* Banner */
+        .banner {
+            height: 180px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-content {
+            text-align: center;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .banner-content h2 {
+            font-size: 1.8rem;
             margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 60, 120, 0.5);
+            color: var(--text-primary);
         }
-        
-        .delivery-info {
-            background-color: rgba(76, 175, 80, 0.2);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 15px 0;
-            border-left: 4px solid var(--delivery-color);
-            animation: pulse 2s infinite;
+
+        .banner-content p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
         }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+
+        .banner-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
         }
-        
+
+        .banner-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Categories */
         .categories {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 15px;
-            margin: 20px 0;
+            margin: 25px 0;
         }
-        
+
         .category-card {
-            background-color: var(--card-bg-color);
-            border-radius: 12px;
-            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
-        
+
         .category-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: var(--accent-color);
+            height: 4px;
+            background: var(--accent);
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
-        
+
         .category-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-        
+
         .category-card:hover::before {
             transform: scaleX(1);
         }
-        
+
+        .category-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 0 auto 15px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 2rem;
+        }
+
+        .dark-theme .category-img {
+            background-color: #2a2a2a;
+        }
+
         .category-card h3 {
             font-size: 1.1rem;
             margin-bottom: 8px;
-            color: var(--text-color);
+            color: var(--text-primary);
         }
-        
+
         .category-card p {
             font-size: 0.9rem;
-            color: var(--secondary-text);
+            color: var(--text-secondary);
         }
-        
+
+        /* Products */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
         }
-        
+
         .product-card {
-            background-color: var(--card-bg-color);
-            border-radius: 12px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
             padding: 15px;
             text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
         }
-        
-        .product-card img {
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme .product-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-img {
             width: 100%;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 1.5rem;
         }
-        
+
+        .dark-theme .product-img {
+            background-color: #2a2a2a;
+        }
+
         .product-card h3 {
             font-size: 1rem;
             margin-bottom: 8px;
-            color: var(--text-color);
+            color: var(--text-primary);
         }
-        
+
         .product-card .price {
-            font-size: 1.1rem;
-            color: var(--accent-color);
-            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 700;
             margin: 10px 0;
         }
-        
+
         .add-to-cart {
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff8a00 100%);
+            background-color: var(--accent);
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 15px;
             border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            transition: var(--transition);
+            font-weight: 600;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        
+
         .add-to-cart:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255, 60, 120, 0.4);
+            background-color: var(--accent-hover);
         }
-        
-        .promo-banner {
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff8a00 100%);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-            animation: fadeIn 1s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .promo-banner h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-        
-        .contact-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff8a00 100%);
-            color: white;
-            text-align: center;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(255, 60, 120, 0.3);
-        }
-        
-        .contact-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(255, 60, 120, 0.4);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            color: var(--secondary-text);
-            font-size: 0.8rem;
-            border-top: 1px solid #333;
-            margin-top: 30px;
-        }
-        
-        .webbot {
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-        
-        /* Корзина */
+
+        /* Cart */
         .cart-icon {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff8a00 100%);
+            bottom: 25px;
+            right: 25px;
+            background: var(--accent);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -262,20 +334,20 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 60, 120, 0.4);
+            box-shadow: var(--shadow);
             z-index: 100;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
-        
+
         .cart-icon:hover {
             transform: scale(1.1);
         }
-        
+
         .cart-badge {
             position: absolute;
             top: -5px;
             right: -5px;
-            background-color: var(--cart-badge);
+            background-color: #e74c3c;
             color: white;
             border-radius: 50%;
             width: 24px;
@@ -286,27 +358,28 @@
             font-size: 0.8rem;
             font-weight: bold;
         }
-        
+
         .cart-container {
             position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 320px;
-            background-color: var(--card-bg-color);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            bottom: 95px;
+            right: 25px;
+            width: 350px;
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
             z-index: 99;
             display: none;
             max-height: 400px;
             overflow-y: auto;
+            transition: var(--transition);
         }
-        
+
         .cart-container.show {
             display: block;
             animation: slideInUp 0.3s ease;
         }
-        
+
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -317,107 +390,165 @@
                 transform: translateY(0);
             }
         }
-        
+
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #333;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
+        .dark-theme .cart-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .cart-item-info {
             flex: 1;
         }
-        
+
         .cart-item-name {
-            font-weight: bold;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
-        
+
         .cart-item-price {
-            color: var(--accent-color);
+            color: var(--accent);
+            font-weight: 600;
         }
-        
+
         .cart-item-quantity {
             display: flex;
             align-items: center;
+            gap: 10px;
         }
-        
+
         .quantity-btn {
-            background-color: #333;
-            color: white;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
             border: none;
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             font-weight: bold;
+            transition: var(--transition);
         }
-        
-        .quantity-value {
-            margin: 0 10px;
+
+        .quantity-btn:hover {
+            background-color: var(--accent);
+            color: white;
         }
-        
+
         .cart-total {
             display: flex;
             justify-content: space-between;
             padding: 15px 0;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .checkout-btn {
-            background: linear-gradient(135deg, var(--accent-color) 0%, #ff8a00 100%);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
+            font-weight: 700;
+            font-size: 1.2rem;
             margin-top: 10px;
+            border-top: 2px solid var(--accent);
         }
-        
-        .empty-cart {
-            text-align: center;
-            padding: 20px;
-            color: var(--secondary-text);
-        }
-        
-        /* Навигация */
-        .back-btn {
-            background-color: #333;
+
+        .checkout-btn {
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 15px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-bottom: 15px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            gap: 10px;
         }
-        
+
+        .checkout-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Navigation */
+        .back-btn {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
         .screen {
             display: none;
+            animation: fadeIn 0.4s ease;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .screen.active {
             display: block;
-            animation: fadeIn 0.3s ease;
         }
-        
-        /* Адаптивность */
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-theme footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .categories, .products-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .logo {
-                font-size: 2rem;
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 0;
             }
             
             .cart-container {
@@ -425,8 +556,16 @@
                 left: 5%;
                 right: 5%;
             }
+            
+            .banner {
+                height: 160px;
+            }
+            
+            .banner-content h2 {
+                font-size: 1.5rem;
+            }
         }
-        
+
         @media (max-width: 480px) {
             .categories, .products-grid {
                 grid-template-columns: 1fr;
@@ -435,66 +574,126 @@
             .container {
                 padding: 10px;
             }
+            
+            .banner {
+                height: 140px;
+            }
+            
+            .banner-content h2 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
-<body>
+<body class="light-theme">
     <div class="container">
         <!-- Главный экран -->
         <div class="screen active" id="main-screen">
             <header>
-                <div class="logo">Помск</div>
+                <div class="logo">POD Shop</div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск товаров...">
+                </div>
+                <button class="theme-toggle" id="theme-toggle">
+                    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Sun.webp" alt="Sun" width="25" height="25" />
+                </button>
             </header>
             
-            <div class="delivery-info">
-                <p>🚗 Доставка по городу: <strong>150Р</strong></p>
-                <p>📍 Дальше цена изменяется</p>
+            <div class="banner" id="banner">
+                <div class="banner-content">
+                    <h2>Самые популярные POD системы</h2>
+                    <p>Бесплатная доставка при заказе от 2000₽</p>
+                    <a href="#" class="banner-btn">Смотреть все</a>
+                </div>
             </div>
             
             <div class="categories">
-                <div class="category-card" data-category="death">
-                    <h3>МЕРТЬ</h3>
-                    <p>Специальные предложения</p>
-                </div>
-                
-                <div class="category-card" data-category="plates">
-                    <h3>Снос - пластинки</h3>
-                    <p>Аксессуары</p>
-                </div>
-                
                 <div class="category-card" data-category="disposables">
+                    <div class="category-img">
+                        <i class="fas fa-smoking"></i>
+                    </div>
                     <h3>Одноразки</h3>
-                    <p>Одноразовые устройства</p>
+                    <p>Популярные бренды</p>
+                </div>
+                
+                <div class="category-card" data-category="snus">
+                    <div class="category-img">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3>Снюс</h3>
+                    <p>Пластинки и порции</p>
                 </div>
                 
                 <div class="category-card" data-category="vapor">
+                    <div class="category-img">
+                        <i class="fas fa-tint"></i>
+                    </div>
                     <h3>Испары/картриджи</h3>
                     <p>Расходные материалы</p>
                 </div>
                 
                 <div class="category-card" data-category="liquids">
+                    <div class="category-img">
+                        <i class="fas fa-wine-bottle"></i>
+                    </div>
                     <h3>Жидкости</h3>
                     <p>Разнообразие вкусов</p>
                 </div>
                 
-                <div class="category-card" data-category="ugo">
-                    <h3>Уго</h3>
-                    <p>Сопутствующие товары</p>
-                </div>
-                
                 <div class="category-card" data-category="pod">
+                    <div class="category-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
                     <h3>POD-системы</h3>
                     <p>Популярные устройства</p>
                 </div>
             </div>
             
-            <div class="promo-banner">
-                <h3>Нашли дешевле?</h3>
-                <p>Снизим цену! Пиши менеджеру в лс</p>
+            <h2>Популярные товары</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-smoking"></i>
+                    </div>
+                    <h3>HQD MAX</h3>
+                    <div class="price">1200₽</div>
+                    <button class="add-to-cart"><i class="fas fa-cart-plus"></i> В корзину</button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-wine-bottle"></i>
+                    </div>
+                    <h3>Жидкость "Яблоко"</h3>
+                    <div class="price">400₽</div>
+                    <button class="add-to-cart"><i class="fas fa-cart-plus"></i> В корзину</button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>POD система X5</h3>
+                    <div class="price">2500₽</div>
+                    <button class="add-to-cart"><i class="fas fa-cart-plus"></i> В корзину</button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3>Снюс "Мята"</h3>
+                    <div class="price">300₽</div>
+                    <button class="add-to-cart"><i class="fas fa-cart-plus"></i> В корзину</button>
+                </div>
             </div>
             
-            <a href="https://t.me/x32adaptive" class="contact-btn">Написать менеджеру</a>
-            
+            <footer>
+                <p>© 2023 POD Shop. Все права защищены</p>
+                <p>Разработано на конструкторе WebBot</p>
+            </footer>
+        </div>
         
         <!-- Экран категории -->
         <div class="screen" id="category-screen">
@@ -515,67 +714,85 @@
         <div class="cart-container" id="cart-container">
             <h3>Корзина</h3>
             <div id="cart-items">
-                <div class="empty-cart">Корзина пуста</div>
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Корзина пуста</p>
+                </div>
             </div>
             <div class="cart-total">
                 <span>Итого:</span>
-                <span id="cart-total">0 руб.</span>
+                <span id="cart-total">0₽</span>
             </div>
-            <button class="checkout-btn" id="checkout-btn">Оформить заказ</button>
+            <button class="checkout-btn" id="checkout-btn"><i class="fas fa-paper-plane"></i> Оформить заказ</button>
         </div>
     </div>
 
     <script>
         // Данные о товарах
         const products = {
-            death: [
-                { id: 1, name: "Набор 'Черная смерть'", price: 1500, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Черная+смерть" },
-                { id: 2, name: "Набор 'Красная смерть'", price: 1600, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Красная+смерть" }
-            ],
-            plates: [
-                { id: 3, name: "Пластинки 'Стандарт'", price: 300, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Пластинки" },
-                { id: 4, name: "Пластинки 'Премиум'", price: 500, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Пластинки+Премиум" }
-            ],
             disposables: [
-                { id: 5, name: "HQD MAX", price: 1200, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=HQD+MAX" },
-                { id: 6, name: "Puff Bar", price: 1000, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Puff+Bar" },
-                { id: 7, name: "Masking", price: 1100, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Masking" }
+                { id: 1, name: "HQD MAX", price: 1200, image: "placeholder" },
+                { id: 2, name: "Puff Bar", price: 1000, image: "placeholder" },
+                { id: 3, name: "Masking", price: 1100, image: "placeholder" }
+            ],
+            snus: [
+                { id: 4, name: "Снюс 'Мята'", price: 300, image: "placeholder" },
+                { id: 5, name: "Снюс 'Ягода'", price: 320, image: "placeholder" },
+                { id: 6, name: "Снюс 'Кола'", price: 350, image: "placeholder" }
             ],
             vapor: [
-                { id: 8, name: "Испаритель X1", price: 250, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Испаритель+X1" },
-                { id: 9, name: "Картридж Standard", price: 200, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Картридж+Standard" }
+                { id: 7, name: "Испаритель X1", price: 250, image: "placeholder" },
+                { id: 8, name: "Картридж Standard", price: 200, image: "placeholder" },
+                { id: 9, name: "Картридж Premium", price: 300, image: "placeholder" }
             ],
             liquids: [
-                { id: 10, name: "Жидкость 'Яблоко'", price: 400, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Яблоко" },
-                { id: 11, name: "Жидкость 'Мята'", price: 400, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Мята" },
-                { id: 12, name: "Жидкость 'Табак'", price: 450, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Табак" }
-            ],
-            ugo: [
-                { id: 13, name: "Уго 'Классик'", price: 200, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Уго+Классик" },
-                { id: 14, name: "Уго 'Экстра'", price: 300, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=Уго+Экстра" }
+                { id: 10, name: "Жидкость 'Яблоко'", price: 400, image: "placeholder" },
+                { id: 11, name: "Жидкость 'Мята'", price: 400, image: "placeholder" },
+                { id: 12, name: "Жидкость 'Табак'", price: 450, image: "placeholder" }
             ],
             pod: [
-                { id: 15, name: "POD система V1", price: 2000, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=POD+V1" },
-                { id: 16, name: "POD система X5", price: 2500, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=POD+X5" },
-                { id: 17, name: "POD система Z7", price: 3000, image: "https://placehold.co/200x200/1a1a1a/ffffff?text=POD+Z7" }
+                { id: 13, name: "POD система V1", price: 2000, image: "placeholder" },
+                { id: 14, name: "POD система X5", price: 2500, image: "placeholder" },
+                { id: 15, name: "POD система Z7", price: 3000, image: "placeholder" }
             ]
         };
 
         // Категории
         const categories = {
-            death: "МЕРТЬ",
-            plates: "Снос - пластинки",
             disposables: "Одноразки",
+            snus: "Снюс",
             vapor: "Испары/картриджи",
             liquids: "Жидкости",
-            ugo: "Уго",
             pod: "POD-системы"
         };
+
+        // Баннеры для ротации
+        const banners = [
+            {
+                title: "Самые популярные POD системы",
+                text: "Бесплатная доставка при заказе от 2000₽",
+                button: "Смотреть все"
+            },
+            {
+                title: "Новые вкусы жидкостей",
+                text: "Более 50 новых вкусов уже в продаже",
+                button: "Посмотреть"
+            },
+            {
+                title: "Акция недели",
+                text: "Скидка 20% на все одноразки до конца недели",
+                button: "Воспользоваться"
+            }
+        ];
 
         // Корзина
         let cart = [];
         
+        // Текущая тема
+        let isDarkTheme = false;
+        
         // Элементы DOM
+        const body = document.body;
         const mainScreen = document.getElementById('main-screen');
         const categoryScreen = document.getElementById('category-screen');
         const categoryTitle = document.getElementById('category-title');
@@ -587,6 +804,8 @@
         const cartItems = document.getElementById('cart-items');
         const cartTotal = document.getElementById('cart-total');
         const checkoutBtn = document.getElementById('checkout-btn');
+        const themeToggle = document.getElementById('theme-toggle');
+        const banner = document.getElementById('banner');
         
         // Навигация по категориям
         document.querySelectorAll('.category-card').forEach(card => {
@@ -609,10 +828,12 @@
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
                     productCard.innerHTML = `
-                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-img">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
                         <h3>${product.name}</h3>
-                        <div class="price">${product.price} руб.</div>
-                        <button class="add-to-cart" data-id="${product.id}">В корзину</button>
+                        <div class="price">${product.price}₽</div>
+                        <button class="add-to-cart" data-id="${product.id}"><i class="fas fa-cart-plus"></i> В корзину</button>
                     `;
                     productsContainer.appendChild(productCard);
                 });
@@ -686,7 +907,12 @@
             
             // Обновляем содержимое корзины
             if (cart.length === 0) {
-                cartItems.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Корзина пуста</p>
+                    </div>
+                `;
             } else {
                 cartItems.innerHTML = '';
                 cart.forEach(item => {
@@ -695,7 +921,7 @@
                     cartItem.innerHTML = `
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">${item.price} руб. x ${item.quantity}</div>
+                            <div class="cart-item-price">${item.price}₽ x ${item.quantity}</div>
                         </div>
                         <div class="cart-item-quantity">
                             <button class="quantity-btn decrease" data-id="${item.id}">-</button>
@@ -735,7 +961,7 @@
             
             // Обновляем общую сумму
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `${total} руб.`;
+            cartTotal.textContent = `${total}₽`;
         }
         
         // Оформление заказа
@@ -747,15 +973,15 @@
             let message = `Новый заказ:%0A%0A`;
             
             cart.forEach(item => {
-                message += `${item.name} - ${item.quantity} шт. по ${item.price} руб.%0A`;
+                message += `${item.name} - ${item.quantity} шт. по ${item.price}₽%0A`;
             });
             
-            message += `%0AИтого: ${total} руб.%0A%0A`;
-            message += `Доставка: 150 руб.%0A`;
-            message += `Общая сумма: ${total + 150} руб.`;
+            message += `%0AИтого: ${total}₽%0A%0A`;
+            message += `Доставка: 150₽%0A`;
+            message += `Общая сумма: ${total + 150}₽`;
             
             // Открываем Telegram с предзаполненным сообщением
-            window.open(`https://t.me/x32adaptive?text=${message}`, '_blank');
+            window.open(`https://t.me/m3tasplo1t_manager?text=${message}`, '_blank');
             
             // Очищаем корзину
             cart = [];
@@ -765,11 +991,54 @@
             alert('Заказ оформлен! С вами свяжется менеджер в Telegram.');
         });
         
+        // Переключение темы
+        themeToggle.addEventListener('click', function() {
+            isDarkTheme = !isDarkTheme;
+            
+            if (isDarkTheme) {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.innerHTML = '<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Last%20Quarter%20Moon%20Face.webp" alt="Moon" width="25" height="25" />';
+            } else {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.innerHTML = '<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Sun.webp" alt="Sun" width="25" height="25" />';
+            }
+        });
+        
+        // Смена баннеров
+        let currentBanner = 0;
+        function rotateBanner() {
+            const bannerContent = banner.querySelector('.banner-content');
+            bannerContent.style.opacity = 0;
+            
+            setTimeout(() => {
+                const current = banners[currentBanner % banners.length];
+                bannerContent.querySelector('h2').textContent = current.title;
+                bannerContent.querySelector('p').textContent = current.text;
+                bannerContent.querySelector('.banner-btn').textContent = current.button;
+                
+                bannerContent.style.opacity = 1;
+                currentBanner++;
+            }, 500);
+        }
+        
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             updateCart();
+            
+            // Запускаем смену баннеров
+            setInterval(rotateBanner, 10000);
+            
+            // Добавляем обработчики для кнопок "В корзину" на главной
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Для демо просто добавляем случайный товар
+                    const randomProduct = Math.floor(Math.random() * 15) + 1;
+                    addToCart(randomProduct);
+                });
+            });
         });
     </script>
 </body>
 </html>
-
