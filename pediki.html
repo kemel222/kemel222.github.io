@@ -13,13 +13,14 @@
             --text-primary: #212529;
             --text-secondary: #6c757d;
             --accent: #4361ee;
-            --accent-hover: #3a56d4;
+            --accent-hover: #5f7fff;
             --success: #28a745;
             --warning: #ffc107;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
             --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
             --border-radius: 16px;
+            --glow: 0 0 15px rgba(67, 97, 238, 0.5);
         }
 
         .dark-theme {
@@ -28,8 +29,9 @@
             --text-primary: #e6e6e6;
             --text-secondary: #a0a0a0;
             --accent: #5f7fff;
-            --accent-hover: #4d6bf1;
+            --accent-hover: #7f9fff;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 20px rgba(95, 127, 255, 0.7);
         }
 
         * {
@@ -49,6 +51,59 @@
             transition: background-color 0.5s ease;
             padding-top: 20px;
             font-family: 'Roboto', sans-serif;
+            position: relative;
+        }
+
+        /* Developer credits */
+        .developer-credits {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(67, 97, 238, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .developer-credits a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .developer-credits a:hover {
+            color: var(--accent-hover);
+        }
+
+        .developer-credits i {
+            font-size: 1rem;
+        }
+
+        .credit-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--gradient);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            box-shadow: var(--glow);
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -87,6 +142,7 @@
 
         .theme-toggle:hover {
             transform: rotate(15deg) scale(1.1);
+            box-shadow: var(--glow);
         }
 
         /* Banner */
@@ -169,6 +225,12 @@
             margin: 30px 0;
         }
 
+        @media (max-width: 576px) {
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .category-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -208,7 +270,7 @@
 
         .category-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15), var(--glow);
         }
 
         .category-card:hover::before {
@@ -254,6 +316,12 @@
             margin: 30px 0;
         }
 
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .product-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -274,26 +342,26 @@
 
         .product-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), var(--glow);
         }
 
-.product-img {
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
+        .product-img {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
 
-.product-img img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
+        .product-img img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
 
         .dark-theme .product-img {
             background: linear-gradient(45deg, #2a2a2a, #333);
@@ -355,7 +423,7 @@
 
         .add-to-cart:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         /* Cart */
@@ -378,6 +446,7 @@
 
         .cart-icon:hover {
             transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), var(--glow);
         }
 
         .cart-badge {
@@ -544,7 +613,7 @@
 
         .checkout-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         .empty-cart {
@@ -796,22 +865,36 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: var(--success);
-            color: white;
-            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #333;
+            padding: 15px 25px;
             border-radius: 30px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             opacity: 0;
             transition: all 0.5s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-theme .toast {
+            background: rgba(30, 30, 30, 0.85);
+            color: #e6e6e6;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+            color: var(--success);
         }
 
         /* Responsive */
@@ -846,11 +929,18 @@
             .banner {
                 height: 200px;
             }
+
+            .developer-credits {
+                bottom: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: max-content;
+            }
         }
 
         @media (max-width: 576px) {
             .categories, .products-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .container {
@@ -878,10 +968,25 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .developer-credits {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
         }
     </style>
 </head>
 <body class="light-theme">
+    <!-- Developer credits -->
+    <div class="developer-credits">
+        <div class="credit-badge">✓</div>
+        <span>Разработано</span>
+        <a href="https://t.me/x32asm" target="_blank">
+            <i class="fab fa-telegram"></i>
+            @x32asm
+        </a>
+    </div>
+
     <div class="container">
         <!-- Theme toggle -->
         <button class="theme-toggle" id="theme-toggle">
@@ -960,7 +1065,7 @@
             <div class="products-grid" id="new-products">
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://i.imgur.com/7vGj7cT.png" alt="Husky Airmax">
+                        <img src="https://i.imgur.com/MmCECF1.jpeg" alt="Husky Airmax">
                         <span class="new-badge">NEW</span>
                     </div>
                     <h3>Husky Airmax</h3>
@@ -970,7 +1075,7 @@
                 
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://i.imgur.com/5Rz6Z9J.png" alt="Geekbar">
+                        <img src="https://i.imgur.com/IIysxZc.png" alt="Geekbar">
                         <span class="new-badge">NEW</span>
                     </div>
                     <h3>Geekbar 25000</h3>
@@ -980,7 +1085,7 @@
                 
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://i.imgur.com/9QZ8Z2J.png" alt="XROS 3 Mini">
+                        <img src="https://i.imgur.com/zQhQFX2.jpeg" alt="XROS 3 Mini">
                         <span class="new-badge">NEW</span>
                     </div>
                     <h3>XROS 3 Mini</h3>
@@ -990,7 +1095,7 @@
                 
                 <div class="product-card">
                     <div class="product-img">
-                        <img src="https://i.imgur.com/3QZ6Z9J.png" alt="Lyft">
+                        <img src="https://i.imgur.com/67E2aFU.jpeg" alt="Lyft">
                         <span class="new-badge">NEW</span>
                     </div>
                     <h3>Снюс "LYFT"</h3>
@@ -1097,24 +1202,19 @@
     <script>
         // Данные о товарах с реальными изображениями
         const products = {
-           disposables: [
-    { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/MmCECF1.jpeg" },
-    { id: 2, name: "Dojo Pixel 25000", price: 1500, image: "https://i.imgur.com/IIysxZc.png" },
-    { id: 3, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/zQhQFX2.jpeg" },
-    { id: 4, name: "Geekbar 25000", price: 1600, image: "https://i.imgur.com/67E2aFU.jpeg" },
-    { id: 5, name: "Ske 15000", price: 1100, image: "https://i.imgur.com/RuzQIKC.jpeg" },
-    { id: 6, name: "Instabar 15000", price: 1100, image: "https://i.imgur.com/bcIoAf0.jpeg" },
-    { id: 7, name: "Dualbar 12000", price: 1000, image: "https://i.imgur.com/z9Evt3l.jpeg" },
-    { id: 8, name: "Lostmary 12000", price: 1000, image: "https://i.imgur.com/5bx6IGD.jpeg" },
-    { id: 9, name: "Lostmary 16000", price: 1300, image: "https://i.imgur.com/hZhDpIm.jpeg" },
-    { id: 10, name: "Duft Pro 10000", price: 900, image: "https://i.imgur.com/HBu1L1q.png" },
-    { id: 11, name: "Tugboat 14000", price: 1200, image: "https://i.imgur.com/7BOmCp3.jpeg" },
-    { id: 12, name: "Elfbar 600", price: 800, image: "https://i.imgur.com/qVdweQH.jpeg" },
-    { id: 13, name: "Ivy 10000", price: 950, image: "https://i.imgur.com/iJ9uFMn.png" },
-    { id: 14, name: "Maskking 8000", price: 850, image: "https://i.imgur.com/wPHARIS.jpeg" },
-    { id: 15, name: "Joyetech 5000", price: 750, image: "https://i.imgur.com/2y1pqFC.jpeg" },
-    { id: 16, name: "Tugboat 18000", price: 1400, image: "https://i.imgur.com/pXjHw2a.png" }
-],
+            disposables: [
+                { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/MmCECF1.jpeg" },
+                { id: 2, name: "Dojo Pixel 25000", price: 1500, image: "https://i.imgur.com/IIysxZc.png" },
+                { id: 3, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/zQhQFX2.jpeg" },
+                { id: 4, name: "Geekbar 25000", price: 1600, image: "https://i.imgur.com/67E2aFU.jpeg" },
+                { id: 5, name: "Ske 15000", price: 1100, image: "https://i.imgur.com/RuzQIKC.jpeg" },
+                { id: 6, name: "Instabar 15000", price: 1100, image: "https://i.imgur.com/bcIoAf0.jpeg" },
+                { id: 7, name: "Dualbar 12000", price: 1000, image: "https://i.imgur.com/z9Evt3l.jpeg" },
+                { id: 8, name: "Lostmary 12000", price: 1000, image: "https://i.imgur.com/5bx6IGD.jpeg" },
+                { id: 9, name: "Lostmary 16000", price: 1300, image: "https://i.imgur.com/hZhDpIm.jpeg" },
+                { id: 10, name: "Duft Pro 10000", price: 900, image: "https://i.imgur.com/HBu1L1q.png" },
+                { id: 11, name: "Tugboat 14000", price: 1200, image: "https://i.imgur.com/7BOmCp3.jpeg" }
+            ],
             "snus-and-plates": [
                 { id: 12, name: "D.L.T.A", price: 400, image: "https://i.imgur.com/3QZ6Z9J.png" },
                 { id: 13, name: "ICEBERG", price: 450, image: "https://i.imgur.com/7vGj7cT.png" },
@@ -1185,10 +1285,7 @@
                 { id: 68, name: "АКБ 18650", price: 800, image: "https://i.imgur.com/3QZ6Z9J.png" }
             ],
             new: [
-                { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 4, name: "Geekbar 25000", price: 1600, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 27, name: "XROS 3 Mini", price: 2200, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 14, name: "Снюс LYFT", price: 420, image: "https://i.imgur.com/3QZ6Z9J.png" }
+                { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/MmCECF1.jpeg" }
             ]
         };
 
@@ -1515,28 +1612,39 @@
         
         // Отправка заказа
         submitOrderBtn.addEventListener('click', function() {
-            // Формируем сообщение для Telegram
+            // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `Новый заказ:%0A%0A`;
-            message += `Имя: ${customerName.value}%0A`;
-            message += `Телефон: ${customerPhone.value}%0A`;
+            let message = `🛒 *НОВЫЙ ЗАКАЗ* %0A%0A`;
             
+            // Контактная информация
+            message += `👤 *Имя:* ${customerName.value}%0A`;
+            message += `📞 *Телефон:* ${customerPhone.value}%0A`;
+            
+            // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `Удобное время: ${deliveryTime.value}%0A`;
+                message += `⏰ *Удобное время:* ${deliveryTime.value}%0A`;
             }
             
             if (customerComment.value.trim()) {
-                message += `Комментарий: ${customerComment.value}%0A`;
+                message += `💬 *Комментарий:* ${customerComment.value}%0A`;
             }
             
-            message += `%0AТовары:%0A`;
+            // Товары в заказе
+            message += `%0A📦 *Состав заказа:*%0A`;
+            message += `┌────────────────────┐%0A`;
             
-            cart.forEach(item => {
-                message += `${item.name} - ${item.quantity} шт. по ${item.price}₽%0A`;
+            cart.forEach((item, index) => {
+                const isLast = index === cart.length - 1;
+                message += `${isLast ? '└' : '├'} *${item.name}*%0A`;
+                message += `${isLast ? ' ' : '│'}   └ ${item.quantity} шт. × ${item.price}₽ = ${item.quantity * item.price}₽%0A`;
             });
             
-            message += `%0AИтого: ${total}₽%0A`;
-            message += `Самовывоз`;
+            message += `└────────────────────┘%0A%0A`;
+            
+            // Итоговая сумма
+            message += `💰 *Итого к оплате:* ${total}₽%0A`;
+            message += `🏪 *Способ получения:* Самовывоз%0A%0A`;
+            message += `_Заказ создан через онлайн-магазин_`;
             
             // Открываем Telegram с предзаполненным сообщением
             window.open(`https://t.me/m3tasplo1t_manager?text=${message}`, '_blank');
