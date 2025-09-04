@@ -13,13 +13,14 @@
             --text-primary: #212529;
             --text-secondary: #6c757d;
             --accent: #4361ee;
-            --accent-hover: #3a56d4;
+            --accent-hover: #5f7fff;
             --success: #28a745;
             --warning: #ffc107;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
             --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
             --border-radius: 16px;
+            --glow: 0 0 15px rgba(67, 97, 238, 0.5);
         }
 
         .dark-theme {
@@ -28,8 +29,9 @@
             --text-primary: #e6e6e6;
             --text-secondary: #a0a0a0;
             --accent: #5f7fff;
-            --accent-hover: #4d6bf1;
+            --accent-hover: #7f9fff;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 20px rgba(95, 127, 255, 0.7);
         }
 
         * {
@@ -49,6 +51,66 @@
             transition: background-color 0.5s ease;
             padding-top: 20px;
             font-family: 'Roboto', sans-serif;
+            position: relative;
+        }
+
+        /* Developer credits */
+        .developer-credits {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(67, 97, 238, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .developer-credits.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .developer-credits a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .developer-credits a:hover {
+            color: var(--accent-hover);
+        }
+
+        .developer-credits i {
+            font-size: 1rem;
+        }
+
+        .credit-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--gradient);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            box-shadow: var(--glow);
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -87,6 +149,7 @@
 
         .theme-toggle:hover {
             transform: rotate(15deg) scale(1.1);
+            box-shadow: var(--glow);
         }
 
         /* Banner */
@@ -97,7 +160,6 @@
             position: relative;
             margin-bottom: 30px;
             box-shadow: var(--shadow);
-            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,11 +167,23 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.5s ease;
+            background-size: cover;
+            background-position: center;
         }
 
         .banner:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
         }
 
         .banner-content {
@@ -169,6 +243,12 @@
             margin: 30px 0;
         }
 
+        @media (max-width: 576px) {
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .category-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -208,7 +288,7 @@
 
         .category-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15), var(--glow);
         }
 
         .category-card:hover::before {
@@ -254,6 +334,12 @@
             margin: 30px 0;
         }
 
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .product-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
@@ -274,26 +360,26 @@
 
         .product-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), var(--glow);
         }
 
-.product-img {
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
+        .product-img {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
 
-.product-img img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
+        .product-img img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
 
         .dark-theme .product-img {
             background: linear-gradient(45deg, #2a2a2a, #333);
@@ -355,7 +441,7 @@
 
         .add-to-cart:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         /* Cart */
@@ -378,6 +464,7 @@
 
         .cart-icon:hover {
             transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), var(--glow);
         }
 
         .cart-badge {
@@ -544,7 +631,7 @@
 
         .checkout-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         .empty-cart {
@@ -676,6 +763,25 @@
             background-color: #2a2a2a;
         }
 
+        .phone-input-container {
+            position: relative;
+        }
+
+        .phone-prefix {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        #customer-phone {
+            padding-left: 40px;
+            letter-spacing: 1px;
+        }
+
         .form-note {
             text-align: center;
             margin-top: 15px;
@@ -796,22 +902,37 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: var(--success);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            box-shadow: var(--shadow);
+            background: rgba(67, 97, 238, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             opacity: 0;
             transition: all 0.5s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            border: 1px solid rgba(67, 97, 238, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .dark-theme .toast {
+            background: rgba(67, 97, 238, 0.15);
+            color: #e6e6e6;
+            border: 1px solid rgba(67, 97, 238, 0.3);
         }
 
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            font-size: 1rem;
+            color: var(--accent);
         }
 
         /* Responsive */
@@ -846,11 +967,18 @@
             .banner {
                 height: 200px;
             }
+
+            .developer-credits {
+                bottom: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: max-content;
+            }
         }
 
         @media (max-width: 576px) {
             .categories, .products-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .container {
@@ -878,10 +1006,25 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .developer-credits {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
         }
     </style>
 </head>
 <body class="light-theme">
+    <!-- Developer credits -->
+    <div class="developer-credits" id="developer-credits">
+        <div class="credit-badge">✓</div>
+        <span>Разработано</span>
+        <a href="https://t.me/x32asm" target="_blank">
+            <i class="fab fa-telegram"></i>
+            @x32asm
+        </a>
+    </div>
+
     <div class="container">
         <!-- Theme toggle -->
         <button class="theme-toggle" id="theme-toggle">
@@ -891,8 +1034,9 @@
         <!-- Главный экран -->
         <div class="screen active" id="main-screen">
             <div class="banner" id="banner" data-category="new">
+                <div class="banner-overlay"></div>
                 <div class="banner-content">
-                    <h2 id="banner-title">Новые поступления жидкостей и устройств</h2>
+                    <h2 id="banner-title">Новые поступления жидкостей</h2>
                     <p id="banner-text">Только самые свежие продукты от ведущих брендов</p>
                     <div class="banner-btn">Смотреть новинки</div>
                 </div>
@@ -956,48 +1100,7 @@
                 </div>
             </div>
             
-            <h2 class="section-title">Новинки</h2>
-            <div class="products-grid" id="new-products">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://i.imgur.com/7vGj7cT.png" alt="Husky Airmax">
-                        <span class="new-badge">NEW</span>
-                    </div>
-                    <h3>Husky Airmax</h3>
-                    <div class="price">1200₽</div>
-                    <button class="add-to-cart" data-id="1"><i class="fas fa-cart-plus"></i> В корзину</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://i.imgur.com/5Rz6Z9J.png" alt="Geekbar">
-                        <span class="new-badge">NEW</span>
-                    </div>
-                    <h3>Geekbar 25000</h3>
-                    <div class="price">1600₽</div>
-                    <button class="add-to-cart" data-id="4"><i class="fas fa-cart-plus"></i> В корзину</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://i.imgur.com/9QZ8Z2J.png" alt="XROS 3 Mini">
-                        <span class="new-badge">NEW</span>
-                    </div>
-                    <h3>XROS 3 Mini</h3>
-                    <div class="price">2500₽</div>
-                    <button class="add-to-cart" data-id="27"><i class="fas fa-cart-plus"></i> В корзину</button>
-                </div>
-                
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://i.imgur.com/3QZ6Z9J.png" alt="Lyft">
-                        <span class="new-badge">NEW</span>
-                    </div>
-                    <h3>Снюс "LYFT"</h3>
-                    <div class="price">420₽</div>
-                    <button class="add-to-cart" data-id="14"><i class="fas fa-cart-plus"></i> В корзину</button>
-                </div>
-            </div>
+            
             
         </div>
         
@@ -1056,7 +1159,10 @@
                         
                         <div class="form-group">
                             <label for="customer-phone">Номер телефона</label>
-                            <input type="tel" id="customer-phone" placeholder="Введите номер телефона">
+                            <div class="phone-input-container">
+                                <span class="phone-prefix">+7</span>
+                                <input type="tel" id="customer-phone" placeholder="(000)-000-00-00" maxlength="15">
+                            </div>
                         </div>
                         
                         <div class="form-nav">
@@ -1097,99 +1203,30 @@
     <script>
         // Данные о товарах с реальными изображениями
         const products = {
-           disposables: [
-    { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/MmCECF1.jpeg" },
-    { id: 2, name: "Dojo Pixel 25000", price: 1500, image: "https://i.imgur.com/IIysxZc.png" },
-    { id: 3, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/zQhQFX2.jpeg" },
-    { id: 4, name: "Geekbar 25000", price: 1600, image: "https://i.imgur.com/67E2aFU.jpeg" },
-    { id: 5, name: "Ske 15000", price: 1100, image: "https://i.imgur.com/RuzQIKC.jpeg" },
-    { id: 6, name: "Instabar 15000", price: 1100, image: "https://i.imgur.com/bcIoAf0.jpeg" },
-    { id: 7, name: "Dualbar 12000", price: 1000, image: "https://i.imgur.com/z9Evt3l.jpeg" },
-    { id: 8, name: "Lostmary 12000", price: 1000, image: "https://i.imgur.com/5bx6IGD.jpeg" },
-    { id: 9, name: "Lostmary 16000", price: 1300, image: "https://i.imgur.com/hZhDpIm.jpeg" },
-    { id: 10, name: "Duft Pro 10000", price: 900, image: "https://i.imgur.com/HBu1L1q.png" },
-    { id: 11, name: "Tugboat 14000", price: 1200, image: "https://i.imgur.com/7BOmCp3.jpeg" },
-    { id: 12, name: "Elfbar 600", price: 800, image: "https://i.imgur.com/qVdweQH.jpeg" },
-    { id: 13, name: "Ivy 10000", price: 950, image: "https://i.imgur.com/iJ9uFMn.png" },
-    { id: 14, name: "Maskking 8000", price: 850, image: "https://i.imgur.com/wPHARIS.jpeg" },
-    { id: 15, name: "Joyetech 5000", price: 750, image: "https://i.imgur.com/2y1pqFC.jpeg" },
-    { id: 16, name: "Tugboat 18000", price: 1400, image: "https://i.imgur.com/pXjHw2a.png" }
-],
+            disposables: [
+                { id: 1, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/wVxEHY6.jpeg" },
+            ],
             "snus-and-plates": [
-                { id: 12, name: "D.L.T.A", price: 400, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 13, name: "ICEBERG", price: 450, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 14, name: "LYFT", price: 420, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 15, name: "Kasta&Mad", price: 350, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 16, name: "Red", price: 300, image: "https://i.imgur.com/3QZ6Z9J.png" }
+               
             ],
             liquids: [
-                { id: 17, name: "Mrak", price: 600, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 18, name: "Catswill", price: 550, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 19, name: "Дикая Монархия", price: 650, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 20, name: "Rell Low Cost", price: 500, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 21, name: "Рик и Морти", price: 700, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 22, name: "Podonki Podgon", price: 550, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 23, name: "Level", price: 600, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 24, name: "Isterika Mix", price: 650, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 25, name: "Dota 60mg", price: 750, image: "https://i.imgur.com/7vGj7cT.png" }
+                { id: 2, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/HwDpeko.jpeg" },
+                { id: 3, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/VFGXnSv.jpeg" },
+                { id: 4, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/nAzaaZb.jpeg" },
             ],
             pod: [
-                { id: 26, name: "XROS Mini", price: 1800, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 27, name: "XROS 3 Mini", price: 2200, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 28, name: "XROS 2", price: 2000, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 29, name: "XROS 5", price: 2500, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 30, name: "XROS 5 Mini", price: 2400, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 31, name: "XROS Pro", price: 2800, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 32, name: "XROS 4 Mini", price: 2300, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 33, name: "XROS Cube", price: 2600, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 34, name: "XROS 3 Nano", price: 2100, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 35, name: "Aegis Boost 2 (B60)", price: 2700, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 36, name: "Aegis Hero H45", price: 2500, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 37, name: "Aegis Hero H45 (New Colors)", price: 2600, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 38, name: "Aegis Hero Classic", price: 2400, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 39, name: "Vmate i2", price: 1900, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 40, name: "Sonder Q2", price: 2000, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 41, name: "Knight AIO", price: 2300, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 42, name: "Knight 80 New Colors", price: 2500, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 43, name: "Knight 80 Old Colors", price: 2400, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 44, name: "Uwell Conick R3000", price: 2200, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 45, name: "Jellybox Nano", price: 2100, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 46, name: "Pasito 2 New Colors", price: 2300, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 47, name: "Pasito 2 Old Colors", price: 2200, image: "https://i.imgur.com/9QZ8Z2J.png" }
+               
             ],
             evaporators: [
-                { id: 48, name: "Smoant K4", price: 400, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 49, name: "Smoant K5", price: 450, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 50, name: "Aegis B Series", price: 500, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 51, name: "Aegis P Series", price: 500, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 52, name: "XROS Series", price: 400, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 53, name: "Smoant S4 Coil", price: 350, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 54, name: "Smoant P-1 Coil", price: 350, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 55, name: "Manto AIO Coil", price: 400, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 56, name: "Aegis Q Series", price: 450, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 57, name: "UB Ultra M8 Coil", price: 400, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 58, name: "Jellybox Nano Coil", price: 350, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 59, name: "Charon Baby Coil", price: 400, image: "https://i.imgur.com/9QZ8Z2J.png" }
+                { id: 5, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/T6YaYtm.jpeg" },
+                
             ],
             tanks: [
-                { id: 60, name: "Smoant Santi Cartridge", price: 300, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 61, name: "Smoant Pasito Mini Cartridge", price: 300, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 62, name: "Smoant Pasito 2", price: 350, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 63, name: "Aegis Boost Pro 2 (B100)", price: 500, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 64, name: "Aegis Boost 2 (B60)", price: 450, image: "https://i.imgur.com/3QZ6Z9J.png" },
-                { id: 65, name: "Aegis Hero H45", price: 400, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 66, name: "Aegis Boost 1", price: 350, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 67, name: "Aegis Nano", price: 400, image: "https://i.imgur.com/9QZ8Z2J.png" }
+               { id: 6, name: "XROS Series", price: 330, image: "https://i.imgur.com/WQkFfL7.jpeg" },
             ],
             other: [
-                { id: 68, name: "АКБ 18650", price: 800, image: "https://i.imgur.com/3QZ6Z9J.png" }
+
             ],
-            new: [
-                { id: 1, name: "Husky Airmax", price: 1200, image: "https://i.imgur.com/7vGj7cT.png" },
-                { id: 4, name: "Geekbar 25000", price: 1600, image: "https://i.imgur.com/5Rz6Z9J.png" },
-                { id: 27, name: "XROS 3 Mini", price: 2200, image: "https://i.imgur.com/9QZ8Z2J.png" },
-                { id: 14, name: "Снюс LYFT", price: 420, image: "https://i.imgur.com/3QZ6Z9J.png" }
-            ]
         };
 
         // Категории
@@ -1207,28 +1244,25 @@
         // Баннеры для ротации
         const banners = [
             {
-                title: "Новые поступления жидкостей и устройств",
+                title: "Новые поступления жидкостей",
                 text: "Только самые свежие продукты от ведущих брендов",
                 button: "Смотреть новинки",
-                category: "new"
+                category: "liquids",
+                image: "https://avatars.mds.yandex.net/i?id=15c6c04abc8102bba279994994363649_l-12421170-images-thumbs&n=13"
             },
             {
                 title: "Скидки на одноразовые электронные сигареты",
                 text: "Успейте приобрести по выгодным ценам",
                 button: "Смотреть одноразки",
-                category: "disposables"
-            },
-            {
-                title: "Широкий ассортимент жидкостей",
-                text: "Более 50 вкусов премиум-качества",
-                button: "Смотреть жидкости",
-                category: "liquids"
+                category: "disposables",
+                image: "https://static.tildacdn.com/tild3238-6534-4937-b866-653630386466/HQD-cuvie-300.jpg"
             },
             {
                 title: "POD системы по специальным ценам",
                 text: "Лучшие устройства для комфортного парения",
                 button: "Смотреть POD системы",
-                category: "pod"
+                category: "pod",
+                image: "https://avatars.mds.yandex.net/get-altay/14021521/2a00000194925e94c525eade03fae22a83a1/XXL_height"
             }
         ];
 
@@ -1274,6 +1308,7 @@
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
         const newProductsContainer = document.getElementById('new-products');
+        const developerCredits = document.getElementById('developer-credits');
         
         // Навигация по категориям
         document.querySelectorAll('.category-card').forEach(card => {
@@ -1303,6 +1338,13 @@
                 bannerText.textContent = bannerData.text;
                 banner.querySelector('.banner-btn').textContent = bannerData.button;
                 banner.dataset.category = bannerData.category;
+                
+                // Устанавливаем фоновое изображение
+                if (bannerData.image) {
+                    banner.style.backgroundImage = `url(${bannerData.image})`;
+                } else {
+                    banner.style.background = 'var(--gradient)';
+                }
                 
                 // Анимация появления
                 bannerTitle.style.opacity = 1;
@@ -1408,7 +1450,7 @@
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             cartBadge.textContent = totalItems;
             
-            // Обновляем содержимое корзины
+            // Обновляем содержимое корзина
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="empty-cart">
@@ -1500,6 +1542,12 @@
                 return;
             }
             
+            // Проверяем корректность номера телефона
+            if (!isValidPhone(customerPhone.value)) {
+                showToast('Введите корректный номер телефона');
+                return;
+            }
+            
             // Переходим к следующему шагу
             document.getElementById('step-1').classList.remove('active');
             document.getElementById('step-2').classList.add('active');
@@ -1515,28 +1563,36 @@
         
         // Отправка заказа
         submitOrderBtn.addEventListener('click', function() {
-            // Формируем сообщение для Telegram
+            // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `Новый заказ:%0A%0A`;
-            message += `Имя: ${customerName.value}%0A`;
-            message += `Телефон: ${customerPhone.value}%0A`;
+            let message = `🛒 **НОВЫЙ ЗАКАЗ** %0A%0A`;
             
+            // Контактная информация
+            message += `👤 **Имя:** ${customerName.value}%0A`;
+            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}%0A`;
+            
+            // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `Удобное время: ${deliveryTime.value}%0A`;
+                message += `⏰ **Удобное время:** ${deliveryTime.value}%0A`;
             }
             
             if (customerComment.value.trim()) {
-                message += `Комментарий: ${customerComment.value}%0A`;
+                message += `💬 **Комментарий:** ${customerComment.value}%0A`;
             }
             
-            message += `%0AТовары:%0A`;
+            // Товары в заказе
+            message += `%0A📦 **Состав заказа:**%0A`;
             
-            cart.forEach(item => {
-                message += `${item.name} - ${item.quantity} шт. по ${item.price}₽%0A`;
+            cart.forEach((item, index) => {
+                const isLast = index === cart.length - 1;
+                message += `${isLast ? '└' : '├'} **${item.name}**%0A`;
+                message += `${isLast ? ' ' : '│'}   └ ${item.quantity} шт. × ${item.price}₽ = ${item.quantity * item.price}₽%0A`;
             });
             
-            message += `%0AИтого: ${total}₽%0A`;
-            message += `Самовывоз`;
+            
+            // Итоговая сумма
+            message += `💰 **Итого к оплате:** ${total}₽%0A`;
+            message += `🏪 **Способ получения:** Самовывоз%0A%0A`;
             
             // Открываем Telegram с предзаполненным сообщением
             window.open(`https://t.me/m3tasplo1t_manager?text=${message}`, '_blank');
@@ -1577,9 +1633,88 @@
             }
         });
         
+        // Маска для телефона
+        function initPhoneMask() {
+            customerPhone.addEventListener('input', function(e) {
+                // Удаляем все нецифровые символы
+                let value = this.value.replace(/\D/g, '');
+                
+                // Ограничиваем длину до 10 цифр (без +7)
+                if (value.length > 10) {
+                    value = value.slice(0, 10);
+                }
+                
+                // Форматируем номер
+                let formattedValue = '';
+                
+                if (value.length > 0) {
+                    formattedValue = '(' + value.substring(0, 3);
+                }
+                
+                if (value.length > 3) {
+                    formattedValue += ')-' + value.substring(3, 6);
+                }
+                
+                if (value.length > 6) {
+                    formattedValue += '-' + value.substring(6, 8);
+                }
+                
+                if (value.length > 8) {
+                    formattedValue += '-' + value.substring(8, 10);
+                }
+                
+                this.value = formattedValue;
+            });
+            
+            // Запрещаем ввод нецифровых символов
+            customerPhone.addEventListener('keydown', function(e) {
+                // Разрешаем: backspace, delete, tab, escape, enter, стрелки, home, end
+                if ([46, 8, 9, 27, 13, 37, 38, 39, 40, 35, 36].includes(e.keyCode) || 
+                    // Разрешаем: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    (e.keyCode === 65 && e.ctrlKey === true) || 
+                    (e.keyCode === 67 && e.ctrlKey === true) || 
+                    (e.keyCode === 86 && e.ctrlKey === true) || 
+                    (e.keyCode === 88 && e.ctrlKey === true)) {
+                    return;
+                }
+                
+                // Запрещаем все, кроме цифр
+                if ((e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        }
+        
+        // Проверка валидности телефона
+        function isValidPhone(phone) {
+            // Убираем все нецифровые символы для проверки
+            const cleanPhone = phone.replace(/\D/g, '');
+            // Должно быть 10 цифр (после +7)
+            return cleanPhone.length === 10;
+        }
+        
+        // Форматирование телефона для сообщения
+        function formatPhoneForMessage(phone) {
+            const cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.length !== 10) return phone;
+            
+            return ` (${cleanPhone.substring(0, 3)})-${cleanPhone.substring(3, 6)}-${cleanPhone.substring(6, 8)}-${cleanPhone.substring(8, 10)}`;
+        }
+        
+        function hideDeveloperCredits() {
+            setTimeout(() => {
+                developerCredits.classList.add('hidden');
+            }, 3000);
+        }
+        
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             updateCart();
+            
+            // Устанавливаем первый баннер
+            if (banners[0].image) {
+                banner.style.backgroundImage = `url(${banners[0].image})`;
+            }
             
             // Запускаем смену баннеров каждые 5 секунд
             setInterval(changeBanner, 5000);
@@ -1598,6 +1733,12 @@
                     orderModal.classList.remove('active');
                 }
             });
+            
+            // Инициализация маски телефона
+            initPhoneMask();
+            
+            // Скрыть уведомление о разработке через 10 секунд
+            hideDeveloperCredits();
         });
     </script>
 </body>
