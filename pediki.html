@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VapeShop | Магазин электронных сигарет и аксессуаров</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --primary-bg: #f8f9fa;
@@ -50,8 +51,10 @@
             min-height: 100vh;
             transition: background-color 0.5s ease;
             padding-top: 20px;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
             position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Developer credits */
@@ -114,7 +117,7 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             font-weight: 700;
         }
 
@@ -437,6 +440,7 @@
             gap: 10px;
             margin-top: auto;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            font-family: 'Poppins', sans-serif;
         }
 
         .add-to-cart:hover {
@@ -567,6 +571,12 @@
             margin-bottom: 5px;
         }
 
+        .cart-item-flavor {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
         .cart-item-price {
             color: var(--accent);
             font-weight: 600;
@@ -627,6 +637,7 @@
             gap: 10px;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
             font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
         }
 
         .checkout-btn:hover {
@@ -716,6 +727,64 @@
             transform: rotate(90deg);
         }
 
+        /* Flavor selection modal */
+        .flavor-select {
+            margin: 20px 0;
+        }
+
+        .flavor-select label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .flavor-select select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .flavor-select select:hover {
+            border-color: var(--accent);
+        }
+
+        .flavor-select select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .dark-theme .flavor-select select {
+            border-color: #444;
+            background-color: #2a2a2a;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e6e6e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        .confirm-flavor {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
         /* Order form */
         .order-form {
             margin-top: 25px;
@@ -749,7 +818,7 @@
             color: var(--text-primary);
             font-size: 1rem;
             transition: var(--transition);
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         .form-group input:focus, .form-group textarea:focus {
@@ -814,6 +883,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .btn-prev {
@@ -851,6 +921,7 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             font-weight: 600;
+            font-family: 'Poppins', sans-serif;
         }
 
         .back-btn:hover {
@@ -1115,7 +1186,7 @@
         </div>
         
         <!-- Корзина -->
-        <div class="cart-icon" id="cart-icon">
+        <div class="cart-icon" id="cart-icon" style="display: none;">
             <i class="fas fa-shopping-cart"></i>
             <div class="cart-badge" id="cart-badge">0</div>
         </div>
@@ -1192,6 +1263,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- Модальное окно выбора вкуса -->
+        <div class="modal-overlay" id="flavor-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Выберите вкус</h3>
+                    <button class="close-modal" id="close-flavor-modal"><i class="fas fa-times"></i></button>
+                </div>
+                
+                <div class="flavor-select">
+                    <label for="flavor-select">Доступные вкусы:</label>
+                    <select id="flavor-select">
+                        <!-- Опции будут добавляться динамически -->
+                    </select>
+                </div>
+                
+                <button class="confirm-flavor" id="confirm-flavor">Добавить в корзину</button>
+            </div>
+        </div>
         
         <!-- Уведомление -->
         <div class="toast" id="toast">
@@ -1201,39 +1291,42 @@
     </div>
 
     <script>
-        // Данные о товарах с реальными изображениями
+        // Замените на ваш токен бота
+        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
+
+        // Данные о товарах с реальными изображениями и вкусами
         const products = {
             disposables: [
-                { id: 1, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/wVxEHY6.jpeg" },
-                { id: 2, name: "Dojo pixel 25000", price: 900, image: "https://i.imgur.com/2xzBeGX.jpeg" },
-                { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/bXLGaLg.jpeg" },
+                { id: 1, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/wVxEHY6.jpeg", flavors: ["Ягодный микс", "Мята", "Тропические фрукты", "Клубника"] },
+                { id: 2, name: "Dojo pixel 25000", price: 900, image: "https://i.imgur.com/2xzBeGX.jpeg", flavors: ["Виноград", "Яблоко", "Манго", "Лимон"] },
+                { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/bXLGaLg.jpeg", flavors: ["Арбуз", "Персик", "Киви", "Ананас"] },
             ],
             "snus-and-plates": [
-               
+                // Добавьте вкусы здесь, если нужно
             ],
             liquids: [
-                { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/HwDpeko.jpeg" },
-                { id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/VFGXnSv.jpeg" },
-                { id: 6, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/nAzaaZb.jpeg" },
-                { id: 7, name: "Podonki Light", price: 350, image: "https://i.imgur.com/A2NeIyB.jpeg" },
-                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg" },
-                { id: 9, name: "Catswill", price: 400, image: "https://i.imgur.com/o5fh2U4.jpeg" },
-                { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/wvFSvMV.jpeg" },
-                { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/vqOe6cM.jpeg" },
-                { id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/J6lx7t0.jpeg" },
+                { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/HwDpeko.jpeg", flavors: ["Клубничный йогурт", "Банан", "Ваниль", "Карамель"] },
+                { id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/VFGXnSv.jpeg", flavors: ["Малина", "Черника", "Ежевика", "Смородина"] },
+                { id: 6, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/nAzaaZb.jpeg", flavors: ["Табак", "Ментол", "Кофе", "Шоколад"] },
+                { id: 7, name: "Podonki Light", price: 350, image: "https://i.imgur.com/A2NeIyB.jpeg", flavors: ["Лимон-лайм", "Грейпфрут", "Апельсин", "Мандарин"] },
+                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg", flavors: ["Дыня", "Арбуз", "Огурец", "Мята"] },
+                { id: 9, name: "Catswill", price: 400, image: "https://i.imgur.com/o5fh2U4.jpeg", flavors: ["Кокос", "Ананас", "Папайя", "Манго"] },
+                { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/wvFSvMV.jpeg", flavors: ["Вишня", "Черешня", "Слива", "Абрикос"] },
+                { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/vqOe6cM.jpeg", flavors: ["Фруктовый микс", "Ягодный пунш", "Цитрусовый", "Тропический"] },
+                { id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/J6lx7t0.jpeg", flavors: ["Кислый лимон", "Зеленое яблоко", "Киви", "Гуава"] },
             ],
             pod: [
-               
+                // Добавьте вкусы здесь, если нужно
             ],
             evaporators: [
-                { id: 13, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/T6YaYtm.jpeg" },
+                { id: 13, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/T6YaYtm.jpeg", flavors: [] },
                 
             ],
             tanks: [
-               { id: 14, name: "XROS Series", price: 330, image: "https://i.imgur.com/WQkFfL7.jpeg" },
+               { id: 14, name: "XROS Series", price: 330, image: "https://i.imgur.com/WQkFfL7.jpeg", flavors: [] },
             ],
             other: [
-
+                // Добавьте вкусы здесь, если нужно
             ],
         };
 
@@ -1286,6 +1379,9 @@
         // Текущий шаг оформления заказа
         let currentStep = 1;
         
+        // Текущий продукт для выбора вкуса
+        let currentProductForFlavor = null;
+        
         // Элементы DOM
         const body = document.body;
         const mainScreen = document.getElementById('main-screen');
@@ -1315,8 +1411,11 @@
         const customerComment = document.getElementById('customer-comment');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
-        const newProductsContainer = document.getElementById('new-products');
         const developerCredits = document.getElementById('developer-credits');
+        const flavorModal = document.getElementById('flavor-modal');
+        const closeFlavorModalBtn = document.getElementById('close-flavor-modal');
+        const flavorSelect = document.getElementById('flavor-select');
+        const confirmFlavorBtn = document.getElementById('confirm-flavor');
         
         // Навигация по категориям
         document.querySelectorAll('.category-card').forEach(card => {
@@ -1388,11 +1487,68 @@
                 document.querySelectorAll('.add-to-cart').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const productId = parseInt(this.dataset.id);
-                        addToCart(productId);
+                        showFlavorModal(productId);
                     });
                 });
             }
         }
+        
+        // Показать модал выбора вкуса
+        function showFlavorModal(productId) {
+            // Находим продукт
+            let productToAdd = null;
+            for (const category in products) {
+                const product = products[category].find(p => p.id === productId);
+                if (product) {
+                    productToAdd = product;
+                    break;
+                }
+            }
+            
+            if (!productToAdd) return;
+            
+            currentProductForFlavor = productToAdd;
+            
+            // Если вкусов нет, добавляем сразу
+            if (!productToAdd.flavors || productToAdd.flavors.length === 0) {
+                addToCart(productToAdd, '');
+                return;
+            }
+            
+            // Заполняем select вкусами
+            flavorSelect.innerHTML = '';
+            productToAdd.flavors.forEach(flavor => {
+                const option = document.createElement('option');
+                option.value = flavor;
+                option.textContent = flavor;
+                flavorSelect.appendChild(option);
+            });
+            
+            // Показываем модал
+            flavorModal.classList.add('active');
+        }
+        
+        // Подтверждение выбора вкуса
+        confirmFlavorBtn.addEventListener('click', function() {
+            const selectedFlavor = flavorSelect.value;
+            if (selectedFlavor) {
+                addToCart(currentProductForFlavor, selectedFlavor);
+                flavorModal.classList.remove('active');
+            } else {
+                showToast('Выберите вкус');
+            }
+        });
+        
+        // Закрытие модала вкуса
+        closeFlavorModalBtn.addEventListener('click', function() {
+            flavorModal.classList.remove('active');
+        });
+        
+        flavorModal.addEventListener('click', function(e) {
+            if (e.target === flavorModal) {
+                flavorModal.classList.remove('active');
+            }
+        });
         
         // Назад на главную
         backToMainBtn.addEventListener('click', function() {
@@ -1410,29 +1566,22 @@
         });
         
         // Добавление в корзину
-        function addToCart(productId) {
-            // Находим продукт во всех категориях
-            let productToAdd = null;
-            for (const category in products) {
-                const product = products[category].find(p => p.id === productId);
-                if (product) {
-                    productToAdd = product;
-                    break;
-                }
-            }
-            
-            if (!productToAdd) return;
+        function addToCart(product, flavor) {
+            // Уникальный ключ для товара с вкусом
+            const itemKey = `${product.id}-${flavor}`;
             
             // Проверяем, есть ли уже товар в корзине
-            const existingItem = cart.find(item => item.id === productId);
+            const existingItem = cart.find(item => item.key === itemKey);
             
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({
-                    id: productToAdd.id,
-                    name: productToAdd.name,
-                    price: productToAdd.price,
+                    key: itemKey,
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    flavor: flavor,
                     quantity: 1
                 });
             }
@@ -1458,6 +1607,13 @@
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             cartBadge.textContent = totalItems;
             
+            // Показываем/скрываем иконку корзины
+            if (totalItems === 0) {
+                cartIcon.style.display = 'none';
+            } else {
+                cartIcon.style.display = 'flex';
+            }
+            
             // Обновляем содержимое корзина
             if (cart.length === 0) {
                 cartItems.innerHTML = `
@@ -1474,12 +1630,13 @@
                     cartItem.innerHTML = `
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
+                            ${item.flavor ? `<div class="cart-item-flavor">Вкус: ${item.flavor}</div>` : ''}
                             <div class="cart-item-price">${item.price}₽ x ${item.quantity}</div>
                         </div>
                         <div class="cart-item-quantity">
-                            <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                            <button class="quantity-btn decrease" data-key="${item.key}">-</button>
                             <span class="quantity-value">${item.quantity}</span>
-                            <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                            <button class="quantity-btn increase" data-key="${item.key}">+</button>
                         </div>
                     `;
                     cartItems.appendChild(cartItem);
@@ -1488,8 +1645,8 @@
                 // Добавляем обработчики для кнопок +/-
                 document.querySelectorAll('.increase').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(item => item.id === id);
+                        const key = this.dataset.key;
+                        const item = cart.find(item => item.key === key);
                         if (item) {
                             item.quantity += 1;
                             updateCart();
@@ -1499,12 +1656,12 @@
                 
                 document.querySelectorAll('.decrease').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(item => item.id === id);
+                        const key = this.dataset.key;
+                        const item = cart.find(item => item.key === key);
                         if (item) {
                             item.quantity -= 1;
                             if (item.quantity === 0) {
-                                cart = cart.filter(i => i.id !== id);
+                                cart = cart.filter(i => i.key !== key);
                             }
                             updateCart();
                         }
@@ -1570,40 +1727,75 @@
         });
         
         // Отправка заказа
-        submitOrderBtn.addEventListener('click', function() {
+        submitOrderBtn.addEventListener('click', async function() {
+            // Получаем chat_id пользователя из Telegram Mini App
+            const user = Telegram.WebApp.initDataUnsafe.user;
+            const chatId = user ? user.id : null;
+            
+            if (!chatId) {
+                showToast('Ошибка: Не удалось получить ID чата');
+                return;
+            }
+            
             // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `🛒 **НОВЫЙ ЗАКАЗ** %0A%0A`;
+            let message = `🛒 **НОВЫЙ ЗАКАЗ** \n\n`;
             
             // Контактная информация
-            message += `👤 **Имя:** ${customerName.value}%0A`;
-            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}%0A`;
+            message += `👤 **Имя:** ${customerName.value}\n`;
+            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}\n`;
             
             // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `⏰ **Удобное время:** ${deliveryTime.value}%0A`;
+                message += `⏰ **Удобное время:** ${deliveryTime.value}\n`;
             }
             
             if (customerComment.value.trim()) {
-                message += `💬 **Комментарий:** ${customerComment.value}%0A`;
+                message += `💬 **Комментарий:** ${customerComment.value}\n`;
             }
             
             // Товары в заказе
-            message += `%0A📦 **Состав заказа:**%0A`;
+            message += `\n📦 **Состав заказа:**\n`;
             
             cart.forEach((item, index) => {
                 const isLast = index === cart.length - 1;
-                message += `${isLast ? '└' : '├'} **${item.name}**%0A`;
-                message += `${isLast ? ' ' : '│'}   └ ${item.quantity} шт. × ${item.price}₽ = ${item.quantity * item.price}₽%0A`;
+                message += `${isLast ? '└' : '├'} **${item.name}**${item.flavor ? ` (${item.flavor})` : ''}\n`;
+                message += `${isLast ? ' ' : '│'}   └ ${item.quantity} шт. × ${item.price}₽ = ${item.quantity * item.price}₽\n`;
             });
             
             
             // Итоговая сумма
-            message += `💰 **Итого к оплате:** ${total}₽%0A`;
-            message += `🏪 **Способ получения:** Самовывоз%0A%0A`;
+            message += `💰 **Итого к оплате:** ${total}₽\n`;
+            message += `🏪 **Способ получения:** Самовывоз\n\n`;
             
-            // Открываем Telegram с предзаполненным сообщением
-            window.open(`https://t.me/m3tasplo1t_manager?text=${message}`, '_blank');
+            // Кодируем сообщение для URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Открываем Telegram с предзаполненным сообщением для менеджера (ЛС)
+            window.open(`https://t.me/m3tasplo1t_manager?text=${encodedMessage}`, '_blank');
+            
+            // Отправка от лица бота через Telegram Bot API на chat_id пользователя
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                if (!response.ok) {
+                    console.error('Ошибка отправки сообщения боту');
+                    showToast('Ошибка при отправке заказа через бота');
+                }
+            } catch (error) {
+                console.error('Ошибка сети:', error);
+                showToast('Ошибка сети при отправке заказа');
+            }
             
             // Очищаем корзину
             cart = [];
@@ -1726,14 +1918,6 @@
             
             // Запускаем смену баннеров каждые 5 секунд
             setInterval(changeBanner, 5000);
-            
-            // Добавляем обработчики для кнопок "В корзину" в новинках
-            document.querySelectorAll('#new-products .add-to-cart').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const productId = parseInt(this.dataset.id);
-                    addToCart(productId);
-                });
-            });
             
             // Закрытие модального окна при клике вне его
             orderModal.addEventListener('click', function(e) {
