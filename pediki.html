@@ -158,6 +158,31 @@
             box-shadow: var(--glow);
         }
 
+        /* Manager contact button */
+        .manager-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .manager-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
         /* Banner */
         .banner {
             height: 220px;
@@ -338,6 +363,25 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        /* Empty state */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
         }
 
         /* Products */
@@ -1002,7 +1046,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: rgba(67, 97, 238, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px;
             -webkit-backdrop-filter: blur(10px);
             color: var(--text-primary);
             padding: 10px 18px;
@@ -1074,6 +1118,13 @@
                 transform: translateX(-50%);
                 width: max-content;
             }
+
+            .manager-button {
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: max-content;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1133,6 +1184,11 @@
             @x32asm
         </a>
     </div>
+
+    <!-- Manager contact button -->
+    <a href="https://t.me/m3tasplo1t_manager" class="manager-button" id="manager-button">
+        <i class="fab fa-telegram"></i> Написать менеджеру
+    </a>
 
     <div class="container">
         <!-- Theme toggle -->
@@ -1328,6 +1384,7 @@
     <script>
         // Замените на ваш токен бота
         const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
+        const MANAGER_USERNAME = 'm3tasplo1t_manager'; // username менеджера
 
         // Данные о товарах с реальными изображениями и вкусами
         const products = {
@@ -1337,21 +1394,21 @@
                 { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/bXLGaLg.jpeg", flavors: ["Арбуз", "Персик", "Киви", "Ананас"] },
             ],
             "snus-and-plates": [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для примера
             ],
             liquids: [
                 { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/HwDpeko.jpeg", flavors: ["Клубничный йогурт", "Банан", "Ваниль", "Карамель"] },
                 { id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/VFGXnSv.jpeg", flavors: ["Малина", "Черника", "Ежевика", "Смородина"] },
                 { id: 6, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/nAzaaZb.jpeg", flavors: ["Табак", "Ментол", "Кофе", "Шоколад"] },
                 { id: 7, name: "Podonki Light", price: 350, image: "https://i.imgur.com/A2NeIyB.jpeg", flavors: ["Лимон-лайм", "Грейпфрут", "Апельсин", "Мандарин"] },
-                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg", flavors: ["Дыня", "Арбуш", "Огурец", "Мята"] },
+                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg", flavors: ["Дыня", "Арбуз", "Огурец", "Мята"] },
                 { id: 9, name: "Catswill", price: 400, image: "https://i.imgur.com/o5fh2U4.jpeg", flavors: ["Кокос", "Ананас", "Папайя", "Манго"] },
                 { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/wvFSvMV.jpeg", flavors: ["Вишня", "Черешня", "Слива", "Абрикос"] },
                 { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/vqOe6cM.jpeg", flavors: ["Фруктовый микс", "Ягодный пунш", "Цитрусовый", "Тропический"] },
                 { id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/J6lx7t0.jpeg", flavors: ["Кислый лимон", "Зеленое яблоко", "Киви", "Гуава"] },
             ],
             pod: [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для примера
             ],
             evaporators: [
                 { id: 13, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/T6YaYtm.jpeg", flavors: [] },
@@ -1361,7 +1418,7 @@
                { id: 14, name: "XROS Series", price: 330, image: "https://i.imgur.com/WQkFfL7.jpeg", flavors: [] },
             ],
             other: [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для примера
             ],
         };
 
@@ -1451,6 +1508,7 @@
         const closeFlavorModalBtn = document.getElementById('close-flavor-modal');
         const flavorSelect = document.getElementById('flavor-select');
         const confirmFlavorBtn = document.getElementById('confirm-flavor');
+        const managerButton = document.getElementById('manager-button');
         
         // Навигация по категориям
         document.querySelectorAll('.category-card').forEach(card => {
@@ -1502,7 +1560,7 @@
             categoryTitle.textContent = categories[category];
             productsContainer.innerHTML = '';
             
-            if (products[category]) {
+            if (products[category] && products[category].length > 0) {
                 products[category].forEach(product => {
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
@@ -1524,6 +1582,20 @@
                         const productId = parseInt(this.dataset.id);
                         showFlavorModal(productId);
                     });
+                });
+            } else {
+                // Если категория пустая
+                productsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-box-open"></i>
+                        <p>В этой категории пока нет товаров</p>
+                        <button class="back-btn" id="back-to-main-from-empty"><i class="fas fa-arrow-left"></i> Вернуться назад</button>
+                    </div>
+                `;
+                
+                document.getElementById('back-to-main-from-empty').addEventListener('click', function() {
+                    categoryScreen.classList.remove('active');
+                    mainScreen.classList.add('active');
                 });
             }
         }
@@ -1775,23 +1847,23 @@
             
             // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `🛒 НОВЫЙ ЗАКАЗ \n\n`;
+            let message = `🛒 **НОВЫЙ ЗАКАЗ** \n\n`;
             
             // Контактная информация
-            message += `👤 Имя: ${customerName.value}\n`;
-            message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
+            message += `👤 **Имя:** ${customerName.value}\n`;
+            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}\n`;
             
             // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `⏰ Удобное время: ${deliveryTime.value}\n`;
+                message += `⏰ **Удобное время:** ${deliveryTime.value}\n`;
             }
             
             if (customerComment.value.trim()) {
-                message += `💬 Комментарий: ${customerComment.value}\n`;
+                message += `💬 **Комментарий:** ${customerComment.value}\n`;
             }
             
             // Товары в заказе
-            message += `\n📦 Состав заказа:\n`;
+            message += `\n📦 **Состав заказа:**\n`;
             
             cart.forEach((item, index) => {
                 const isLast = index === cart.length - 1;
@@ -1799,22 +1871,14 @@
                 message += `${isLast ? ' ' : '│'}   └ ${item.quantity} шт. × ${item.price}₽ = ${item.quantity * item.price}₽\n`;
             });
             
-            
             // Итоговая сумма
-            message += `💰 Итого к оплате: ${total}₽\n`;
-            message += `🏪 Способ получения: Самовывоз\n\n`;
+            message += `💰 **Итого к оплате:** ${total}₽\n`;
+            message += `🏪 **Способ получения:** Самовывоз\n\n`;
             
             // Кодируем сообщение для URL
             const encodedMessage = encodeURIComponent(message);
             
-            // Используем метод Telegram WebApp для открытия ссылки
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.openTelegramLink(`https://t.me/m3tasplo1t_manager?text=${encodedMessage}`);
-            } else {
-                // Альтернативный метод для браузера
-                window.open(`https://t.me/m3tasplo1t_manager?text=${encodedMessage}`, '_blank');
-            }
-            // Отправка от лица бота через Telegram Bot API на chat_id пользователя
+            // 1. Отправляем сообщение от имени бота менеджеру
             try {
                 const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
@@ -1824,17 +1888,32 @@
                     body: JSON.stringify({
                         chat_id: chatId,
                         text: message,
-                        parse_mode: 'Markdown'
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [[
+                                {
+                                    text: "Написать менеджеру",
+                                    url: `https://t.me/${MANAGER_USERNAME}?start=order`
+                                }
+                            ]]
+                        }
                     })
                 });
                 
                 if (!response.ok) {
                     console.error('Ошибка отправки сообщения боту');
-                    showToast('Ошибка при отправке заказа через бота');
                 }
             } catch (error) {
                 console.error('Ошибка сети:', error);
-                showToast('Ошибка сети при отправке заказа');
+            }
+            
+            // 2. Отправляем сообщение от пользователя менеджеру
+            // Используем метод Telegram WebApp для открытия ссылки
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+            } else {
+                // Альтернативный метод для браузера
+                window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
             }
             
             // Очищаем корзину
