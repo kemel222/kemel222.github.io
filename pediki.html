@@ -1961,7 +1961,7 @@
                 }
 
                 if (window.Telegram && Telegram.WebApp) {
-                    window.Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                    Telegram.WebApp.openLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
                 } else {
                     window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
                 }
