@@ -1959,10 +1959,12 @@
                 if (!response.ok) {
                     console.error('Ошибка отправки сообщения боту');
                 }
-
-                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
-                // 2. Отправляем сообщение от пользователя менеджеру
                 
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                } else {
+                    window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
+                }
                 
                 // Очищаем корзину
                 cart = [];
