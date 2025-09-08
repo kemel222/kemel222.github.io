@@ -1566,7 +1566,7 @@
             if (window.Telegram && Telegram.WebApp) {
                 let msg = 'Здравствуйте, у меня проблема:';
                 const msg_enc = encodeURI(msg);
-                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${msg_enc}`);
+                window.Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${msg_enc}`);
             } else {
                 window.open(`https://t.me/${MANAGER_USERNAME}`, '_blank');
             }
@@ -1963,7 +1963,7 @@
                 }
 
                 if (window.Telegram && Telegram.WebApp) {
-                    Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                    window.Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
                 } else {
                     window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
                 }
