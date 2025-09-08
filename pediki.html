@@ -1961,7 +1961,7 @@
                 }
                 
                 // 2. Отправляем сообщение от пользователя менеджеру
-                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
                 
                 // Очищаем корзину
                 cart = [];
