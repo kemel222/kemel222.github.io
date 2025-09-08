@@ -392,16 +392,18 @@
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 28px; /* Увеличил padding для большего размера */
+            border-radius: 12px; /* Увеличил радиус скругления */
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
             font-family: 'Manrope', sans-serif;
+            font-size: 1.1rem; /* Увеличил размер шрифта */
             transition: var(--transition);
+            text-decoration: none;
         }
 
         .back-to-main-btn:hover {
@@ -1143,9 +1145,24 @@
             }
 
             .developer-credits {
-                bottom: 80px;
+                position: fixed;
+                bottom: 15px;
                 left: 50%;
                 transform: translateX(-50%);
+                background: rgba(67, 97, 238, 0.1);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 0.85rem;
+                z-index: 999;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(67, 97, 238, 0.2);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                opacity: 1;
+                transition: opacity 0.5s ease;
                 width: max-content;
             }
         }
@@ -1408,7 +1425,7 @@
 
     <script>
         // Замените на ваш токен бота
-        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Вставьте ваш токен бота
+        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
         const MANAGER_USERNAME = 'm3tasplo1t_manager'; // username менеджера
 
         // Данные о товарах с реальными изображениями и вкусами
@@ -1624,14 +1641,9 @@
                     <div class="empty-state">
                         <i class="fas fa-box-open"></i>
                         <p>В этой категории пока нет товаров</p>
-                        <button class="back-to-main-btn" id="back-to-main-from-empty"><i class="fas fa-arrow-left"></i> Вернуться назад</button>
                     </div>
                 `;
                 
-                document.getElementById('back-to-main-from-empty').addEventListener('click', function() {
-                    categoryScreen.classList.remove('active');
-                    mainScreen.classList.add('active');
-                });
             }
         }
         
