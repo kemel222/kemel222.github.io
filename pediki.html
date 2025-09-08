@@ -1959,9 +1959,9 @@
                 if (!response.ok) {
                     console.error('Ошибка отправки сообщения боту');
                 }
-                
+
                 if (window.Telegram && Telegram.WebApp) {
-                    Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                    window.Telegram.WebApp.openLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
                 } else {
                     window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
                 }
@@ -2080,6 +2080,7 @@
         }
         
         function hideDeveloperCredits() {
+            
             setTimeout(() => {
                 developerCredits.classList.add('hidden');
             }, 3000);
@@ -2088,7 +2089,7 @@
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             updateCart();
-            
+            window.Telegram.WebApp.expand();
             // Устанавливаем первый баннер
             if (banners[0].image) {
                 banner.style.backgroundImage = `url(${banners[0].image})`;
