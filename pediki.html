@@ -158,31 +158,6 @@
             box-shadow: var(--glow);
         }
 
-        /* Manager contact button */
-        .manager-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow);
-            z-index: 1000;
-            text-decoration: none;
-        }
-
-        .manager-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
-        }
-
         /* Banner */
         .banner {
             height: 220px;
@@ -265,6 +240,35 @@
             border-color: white;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Manager button */
+        .manager-section {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .manager-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .manager-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         /* Categories */
@@ -381,7 +385,28 @@
 
         .empty-state p {
             font-size: 1.1rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .back-to-main-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+            font-family: 'Manrope', sans-serif;
+            transition: var(--transition);
+        }
+
+        .back-to-main-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
         /* Products */
@@ -710,6 +735,11 @@
             box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4), var(--glow);
         }
 
+        .checkout-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
         .empty-cart {
             text-align: center;
             padding: 35px 20px;
@@ -900,7 +930,7 @@
         }
 
         .dark-theme .form-group input, .dark-theme .form-group textarea {
-            border-color: #444;
+            border-color: 444;
             background-color: #2a2a2a;
         }
 
@@ -1046,7 +1076,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: rgba(67, 97, 238, 0.1);
-            backdrop-filter: blur(10px;
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             color: var(--text-primary);
             padding: 10px 18px;
@@ -1118,13 +1148,6 @@
                 transform: translateX(-50%);
                 width: max-content;
             }
-
-            .manager-button {
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: max-content;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1184,11 +1207,6 @@
             @x32asm
         </a>
     </div>
-
-    <!-- Manager contact button -->
-    <a href="https://t.me/m3tasplo1t_manager" class="manager-button" id="manager-button">
-        <i class="fab fa-telegram"></i> Написать менеджеру
-    </a>
 
     <div class="container">
         <!-- Theme toggle -->
@@ -1256,13 +1274,20 @@
                     <p>Расходные материалы</p>
                 </div>
                 
-                <div class="category-card full-width" data-category="other">
+                <div class="category-card" data-category="other">
                     <div class="category-img">
                         <i class="fas fa-box-open"></i>
                     </div>
                     <h3>Разное</h3>
                     <p>Аксессуары и комплектующие</p>
                 </div>
+            </div>
+            
+            <!-- Кнопка связи с менеджером -->
+            <div class="manager-section">
+                <button class="manager-btn" id="manager-button">
+                    <i class="fas fa-headset"></i> Связаться с менеджером
+                </button>
             </div>
         </div>
         
@@ -1383,7 +1408,7 @@
 
     <script>
         // Замените на ваш токен бота
-        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Вставьте ваш токен бота
         const MANAGER_USERNAME = 'm3tasplo1t_manager'; // username менеджера
 
         // Данные о товарах с реальными изображениями и вкусами
@@ -1461,6 +1486,7 @@
 
         // Корзина
         let cart = [];
+        let isProcessing = false;
         
         // Текущая тема
         let isDarkTheme = false;
@@ -1516,6 +1542,15 @@
                 const category = this.dataset.category;
                 showCategory(category);
             });
+        });
+        
+        // Кнопка связи с менеджером
+        managerButton.addEventListener('click', function() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}`);
+            } else {
+                window.open(`https://t.me/${MANAGER_USERNAME}`, '_blank');
+            }
         });
         
         // Баннер кликабельный
@@ -1589,7 +1624,7 @@
                     <div class="empty-state">
                         <i class="fas fa-box-open"></i>
                         <p>В этой категории пока нет товаров</p>
-                        <button class="back-btn" id="back-to-main-from-empty"><i class="fas fa-arrow-left"></i> Вернуться назад</button>
+                        <button class="back-to-main-btn" id="back-to-main-from-empty"><i class="fas fa-arrow-left"></i> Вернуться назад</button>
                     </div>
                 `;
                 
@@ -1708,7 +1743,7 @@
             }, 300);
         }
         
-        // Обновление корзины
+        // Обновление корзина
         function updateCart() {
             // Обновляем бейдж
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -1836,12 +1871,21 @@
         
         // Отправка заказа
         submitOrderBtn.addEventListener('click', async function() {
+            if (isProcessing) return;
+            
+            isProcessing = true;
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.innerHTML = 'Отправка... <i class="fas fa-spinner fa-spin"></i>';
+            
             // Получаем chat_id пользователя из Telegram Mini App
             const user = Telegram.WebApp.initDataUnsafe.user;
             const chatId = user ? user.id : null;
             
             if (!chatId) {
                 showToast('Ошибка: Не удалось получить ID чата');
+                isProcessing = false;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = 'Заказать <i class="fas fa-check"></i>';
                 return;
             }
             
@@ -1878,8 +1922,8 @@
             // Кодируем сообщение для URL
             const encodedMessage = encodeURIComponent(message);
             
-            // 1. Отправляем сообщение от имени бота менеджеру
             try {
+                // 1. Отправляем сообщение от имени бота менеджеру
                 const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
@@ -1903,28 +1947,32 @@
                 if (!response.ok) {
                     console.error('Ошибка отправки сообщения боту');
                 }
+                
+                // 2. Отправляем сообщение от пользователя менеджеру
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                } else {
+                    window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
+                }
+                
+                // Очищаем корзину
+                cart = [];
+                updateCart();
+                
+                // Закрываем модальное окно
+                orderModal.classList.remove('active');
+                cartContainer.classList.remove('show');
+                
+                showToast('Заказ оформлен! С вами свяжется менеджер.');
+                
             } catch (error) {
                 console.error('Ошибка сети:', error);
+                showToast('Ошибка сети при отправке заказа');
+            } finally {
+                isProcessing = false;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = 'Заказать <i class="fas fa-check"></i>';
             }
-            
-            // 2. Отправляем сообщение от пользователя менеджеру
-            // Используем метод Telegram WebApp для открытия ссылки
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
-            } else {
-                // Альтернативный метод для браузера
-                window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
-            }
-            
-            // Очищаем корзину
-            cart = [];
-            updateCart();
-            
-            // Закрываем модальное окно
-            orderModal.classList.remove('active');
-            cartContainer.classList.remove('show');
-            
-            showToast('Заказ оформлен! С вами свяжется менеджер.');
         });
         
         // Показать уведомление
