@@ -1778,20 +1778,20 @@
             let message = `🛒 НОВЫЙ ЗАКАЗ \n\n`;
             
             // Контактная информация
-            message += `👤 **Имя:** ${customerName.value}\n`;
-            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}\n`;
+            message += `👤 Имя: ${customerName.value}\n`;
+            message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
             
             // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `⏰ **Удобное время:** ${deliveryTime.value}\n`;
+                message += `⏰ Удобное время: ${deliveryTime.value}\n`;
             }
             
             if (customerComment.value.trim()) {
-                message += `💬 **Комментарий:** ${customerComment.value}\n`;
+                message += `💬 Комментарий: ${customerComment.value}\n`;
             }
             
             // Товары в заказе
-            message += `\n📦 **Состав заказа:**\n`;
+            message += `\n📦 Состав заказа:\n`;
             
             cart.forEach((item, index) => {
                 const isLast = index === cart.length - 1;
@@ -1801,8 +1801,8 @@
             
             
             // Итоговая сумма
-            message += `💰 **Итого к оплате:** ${total}₽\n`;
-            message += `🏪 **Способ получения: Самовывоз**\n\n`;
+            message += `💰 Итого к оплате: ${total}₽\n`;
+            message += `🏪 Способ получения: Самовывоз\n\n`;
             
             // Кодируем сообщение для URL
             const encodedMessage = encodeURIComponent(message);
