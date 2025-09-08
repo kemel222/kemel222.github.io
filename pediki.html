@@ -1564,7 +1564,9 @@
         // Кнопка связи с менеджером
         managerButton.addEventListener('click', function() {
             if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}`);
+                let msg = 'Здравствуйте, у меня проблема:';
+                const msg_enc = encodeURI(msg);
+                Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${msg_enc}`);
             } else {
                 window.open(`https://t.me/${MANAGER_USERNAME}`, '_blank');
             }
@@ -1903,23 +1905,23 @@
             
             // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `🛒 **НОВЫЙ ЗАКАЗ** \n\n`;
+            let message = `🛒 НОВЫЙ ЗАКАЗ \n\n`;
             
             // Контактная информация
-            message += `👤 **Имя:** ${customerName.value}\n`;
-            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}\n`;
+            message += `👤 Имя: ${customerName.value}\n`;
+            message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
             
             // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `⏰ **Удобное время:** ${deliveryTime.value}\n`;
+                message += `⏰ Удобное время: ${deliveryTime.value}\n`;
             }
             
             if (customerComment.value.trim()) {
-                message += `💬 **Комментарий:** ${customerComment.value}\n`;
+                message += `💬 Комментарий: ${customerComment.value}\n`;
             }
             
             // Товары в заказе
-            message += `\n📦 **Состав заказа:**\n`;
+            message += `\n📦 Состав заказа:\n`;
             
             cart.forEach((item, index) => {
                 const isLast = index === cart.length - 1;
@@ -1928,8 +1930,8 @@
             });
             
             // Итоговая сумма
-            message += `💰 **Итого к оплате:** ${total}₽\n`;
-            message += `🏪 **Способ получения:** Самовывоз\n\n`;
+            message += `💰 Итого к оплате: ${total}₽\n`;
+            message += `🏪 Способ получения: Самовывоз`;
             
             // Кодируем сообщение для URL
             const encodedMessage = encodeURIComponent(message);
@@ -1949,7 +1951,7 @@
                             inline_keyboard: [[
                                 {
                                     text: "Написать менеджеру",
-                                    url: `https://t.me/${MANAGER_USERNAME}?start=order`
+                                    url: `https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`
                                 }
                             ]]
                         }
@@ -1961,7 +1963,7 @@
                 }
 
                 if (window.Telegram && Telegram.WebApp) {
-                    Telegram.WebApp.openLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
+                    Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
                 } else {
                     window.open(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`, '_blank');
                 }
