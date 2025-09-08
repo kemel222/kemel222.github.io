@@ -467,6 +467,44 @@
             box-shadow: 0 6px 16px rgba(67, 97, 238, 0.35), var(--glow);
         }
 
+        /* Empty category state */
+        .empty-category {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-category i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .empty-category p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .manager-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .manager-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(67, 97, 238, 0.4);
+        }
+
         /* Cart */
         .cart-icon {
             position: fixed;
@@ -1208,6 +1246,13 @@
                     <p>Аксессуары и комплектующие</p>
                 </div>
             </div>
+
+            <!-- Кнопка связи с менеджером -->
+            <div class="manager-contact-container" style="text-align: center; margin: 40px 0 20px;">
+                <a href="https://t.me/m3tasplo1t_manager" class="manager-contact-btn" id="manager-contact-btn">
+                    <i class="fab fa-telegram"></i> Написать менеджеру
+                </a>
+            </div>
         </div>
         
         <!-- Экран категории -->
@@ -1327,7 +1372,7 @@
 
     <script>
         // Замените на ваш токен бота
-        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // Вставьте ваш токен бота
 
         // Данные о товарах с реальными изображениями и вкусами
         const products = {
@@ -1337,21 +1382,21 @@
                 { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/bXLGaLg.jpeg", flavors: ["Арбуз", "Персик", "Киви", "Ананас"] },
             ],
             "snus-and-plates": [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для демонстрации
             ],
             liquids: [
                 { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/HwDpeko.jpeg", flavors: ["Клубничный йогурт", "Банан", "Ваниль", "Карамель"] },
                 { id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/VFGXnSv.jpeg", flavors: ["Малина", "Черника", "Ежевика", "Смородина"] },
                 { id: 6, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/nAzaaZb.jpeg", flavors: ["Табак", "Ментол", "Кофе", "Шоколад"] },
                 { id: 7, name: "Podonki Light", price: 350, image: "https://i.imgur.com/A2NeIyB.jpeg", flavors: ["Лимон-лайм", "Грейпфрут", "Апельсин", "Мандарин"] },
-                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg", flavors: ["Дыня", "Арбуш", "Огурец", "Мята"] },
+                { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Yo1f1Vd.jpeg", flavors: ["Дыня", "Арбуз", "Огурец", "Мята"] },
                 { id: 9, name: "Catswill", price: 400, image: "https://i.imgur.com/o5fh2U4.jpeg", flavors: ["Кокос", "Ананас", "Папайя", "Манго"] },
                 { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/wvFSvMV.jpeg", flavors: ["Вишня", "Черешня", "Слива", "Абрикос"] },
                 { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/vqOe6cM.jpeg", flavors: ["Фруктовый микс", "Ягодный пунш", "Цитрусовый", "Тропический"] },
                 { id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/J6lx7t0.jpeg", flavors: ["Кислый лимон", "Зеленое яблоко", "Киви", "Гуава"] },
             ],
             pod: [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для демонстрации
             ],
             evaporators: [
                 { id: 13, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/T6YaYtm.jpeg", flavors: [] },
@@ -1361,7 +1406,7 @@
                { id: 14, name: "XROS Series", price: 330, image: "https://i.imgur.com/WQkFfL7.jpeg", flavors: [] },
             ],
             other: [
-                // Добавьте вкусы здесь, если нужно
+                // Пустая категория для демонстрации
             ],
         };
 
@@ -1451,6 +1496,7 @@
         const closeFlavorModalBtn = document.getElementById('close-flavor-modal');
         const flavorSelect = document.getElementById('flavor-select');
         const confirmFlavorBtn = document.getElementById('confirm-flavor');
+        const managerContactBtn = document.getElementById('manager-contact-btn');
         
         // Навигация по категориям
         document.querySelectorAll('.category-card').forEach(card => {
@@ -1464,6 +1510,16 @@
         banner.addEventListener('click', function() {
             const category = this.dataset.category;
             showCategory(category);
+        });
+        
+        // Кнопка связи с менеджером
+        managerContactBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.openTelegramLink('https://t.me/m3tasplo1t_manager');
+            } else {
+                window.open('https://t.me/m3tasplo1t_manager', '_blank');
+            }
         });
         
         // Функция смены баннера
@@ -1502,7 +1558,7 @@
             categoryTitle.textContent = categories[category];
             productsContainer.innerHTML = '';
             
-            if (products[category]) {
+            if (products[category] && products[category].length > 0) {
                 products[category].forEach(product => {
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
@@ -1524,6 +1580,28 @@
                         const productId = parseInt(this.dataset.id);
                         showFlavorModal(productId);
                     });
+                });
+            } else {
+                // Если категория пустая
+                productsContainer.innerHTML = `
+                    <div class="empty-category">
+                        <i class="fas fa-box-open"></i>
+                        <p>В этой категории пока нет товаров</p>
+                        <p>Но вы можете написать менеджеру для уточнения</p>
+                        <a href="https://t.me/m3tasplo1t_manager" class="manager-contact-btn">
+                            <i class="fab fa-telegram"></i> Написать менеджеру
+                        </a>
+                    </div>
+                `;
+                
+                // Обработчик для кнопки в пустой категории
+                document.querySelector('.empty-category .manager-contact-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (window.Telegram && Telegram.WebApp) {
+                        Telegram.WebApp.openTelegramLink('https://t.me/m3tasplo1t_manager');
+                    } else {
+                        window.open('https://t.me/m3tasplo1t_manager', '_blank');
+                    }
                 });
             }
         }
@@ -1753,7 +1831,7 @@
             document.getElementById('step-1').classList.remove('active');
             document.getElementById('step-2').classList.add('active');
             currentStep = 2;
-        });
+        }
         
         // Возврат к предыдущему шагу
         backToStep1Btn.addEventListener('click', function() {
@@ -1775,23 +1853,23 @@
             
             // Формируем красивое сообщение для Telegram
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `🛒 НОВЫЙ ЗАКАЗ \n\n`;
+            let message = `🛒 **НОВЫЙ ЗАКАЗ** \n\n`;
             
             // Контактная информация
-            message += `👤 Имя: ${customerName.value}\n`;
-            message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
+            message += `👤 **Имя:** ${customerName.value}\n`;
+            message += `📞 **Телефон:** +7${formatPhoneForMessage(customerPhone.value)}\n`;
             
             // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
-                message += `⏰ Удобное время: ${deliveryTime.value}\n`;
+                message += `⏰ **Удобное время:** ${deliveryTime.value}\n`;
             }
             
             if (customerComment.value.trim()) {
-                message += `💬 Комментарий: ${customerComment.value}\n`;
+                message += `💬 **Комментарий:** ${customerComment.value}\n`;
             }
             
             // Товары в заказе
-            message += `\n📦 Состав заказа:\n`;
+            message += `\n📦 **Состав заказа:**\n`;
             
             cart.forEach((item, index) => {
                 const isLast = index === cart.length - 1;
@@ -1801,8 +1879,8 @@
             
             
             // Итоговая сумма
-            message += `💰 Итого к оплате: ${total}₽\n`;
-            message += `🏪 Способ получения: Самовывоз\n\n`;
+            message += `💰 **Итого к оплате:** ${total}₽\n`;
+            message += `🏪 **Способ получения:** Самовывоз\n\n`;
             
             // Кодируем сообщение для URL
             const encodedMessage = encodeURIComponent(message);
@@ -1825,7 +1903,15 @@
                     body: JSON.stringify({
                         chat_id: chatId,
                         text: message,
-                        parse_mode: 'Markdown'
+                        parse_mode: 'Markdown',
+                        reply_markup: {
+                            inline_keyboard: [[
+                                {
+                                    text: "💬 Написать менеджеру",
+                                    url: "https://t.me/m3tasplo1t_manager"
+                                }
+                            ]]
+                        }
                     })
                 });
                 
