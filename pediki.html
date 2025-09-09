@@ -392,8 +392,8 @@
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 14px 28px; /* Увеличил padding для большего размера */
-            border-radius: 12px; /* Увеличил радиус скругления */
+            padding: 14px 28px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
             display: inline-flex;
@@ -401,7 +401,7 @@
             gap: 10px;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
             font-family: 'Manrope', sans-serif;
-            font-size: 1.1rem; /* Увеличил размер шрифта */
+            font-size: 1.1rem;
             transition: var(--transition);
             text-decoration: none;
         }
@@ -439,6 +439,7 @@
             border: 1px solid rgba(0,0,0,0.05);
             overflow: hidden;
             height: 100%;
+            cursor: pointer;
         }
 
         .dark-theme .product-card {
@@ -471,6 +472,7 @@
             max-height: 100%;
             object-fit: contain;
             transition: transform 0.3s ease;
+            border-radius: 8px;
         }
 
         .product-card:hover .product-img img {
@@ -554,6 +556,10 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             z-index: 100;
             transition: var(--transition);
+        }
+
+        .cart-icon i {
+            color: white;
         }
 
         .cart-icon:hover {
@@ -867,7 +873,7 @@
         .dark-theme .flavor-select select {
             border-color: #444;
             background-color: #2a2a2a;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e6e6e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24' fill='none' stroke='%23e6e6e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         }
 
         .confirm-flavor {
@@ -932,7 +938,7 @@
         }
 
         .dark-theme .form-group input, .dark-theme .form-group textarea {
-            border-color: 444;
+            border-color: #444;
             background-color: #2a2a2a;
         }
 
@@ -1401,11 +1407,11 @@
         <div class="modal-overlay" id="flavor-modal">
             <div class="modal">
                 <div class="modal-header">
-                    <h3>Выберите вкус</h3>
+                    <h3 id="flavor-modal-title">Выберите вкус</h3>
                     <button class="close-modal" id="close-flavor-modal"><i class="fas fa-times"></i></button>
                 </div>
                 
-                <div class="flavor-select">
+                <div class="flavor-select" id="flavor-select-container">
                     <label for="flavor-select">Доступные вкусы:</label>
                     <select id="flavor-select">
                         <!-- Опции будут добавляться динамически -->
@@ -1425,8 +1431,8 @@
 
     <script>
         // Замените на ваш токен бота
-        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik'; // Вставьте ваш токен бота
-        const MANAGER_USERNAME = 'm3tasplo1t_manager'; // username менеджера
+        const BOT_TOKEN = '7748629727:AAEfjHY8PzeojYHYBFH2Dkk9iJVPg-98iik';
+        const MANAGER_USERNAME = 'm3tasplo1t_manager';
 
         // Данные о товарах с реальными изображениями и вкусами
         const products = {
@@ -1435,9 +1441,7 @@
                 { id: 2, name: "Dojo pixel 25000", price: 900, image: "https://i.imgur.com/GSqSLch.png", flavors: ["Pink Lemonade", "Watermelon Ice"] },
                 { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/MzVZGpo.png", flavors: ["Кислый Боярышник Лёд"] },
             ],
-            "snus-and-plates": [
-                // Пустая категория для примера
-            ],
+            "snus-and-plates": [],
             liquids: [
                 { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/ArsbmnL.png", flavors: ["Клубничное Мороженое", "Мороженое с Киви", "Освежающая Дыня", "Освежающее Манго", "Освежающее Яблоко", "Освежающий Ананас", "Освежающий Арбуз", "Малиновое Мороженое"] },
                 { id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/xXkMGpB.png", flavors: ["Кислое Манго Клубника", "Морозная Фанта"] },
@@ -1446,22 +1450,17 @@
                 { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/KEzpB0k.png", flavors: ["Mango Coconut", "Fruit Gummy Bears", "Banana Milk", "Peach Yogurt"] },
                 { id: 9, name: "Catswill", price: 350, image: "https://i.imgur.com/odFNZB4.png", flavors: ["Йогурт Клубника Маракуйя", "Имбирный Лимонад с Малиной", "Мамба Манго Апельсин", "Чернично Арбузная Хубба-Бубба", "Мятная Жвачка", "Лимонад Черника Лайм"] },
                 { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/jivfGF6.png", flavors: ["Watermelon Strawberry", "Strawberry", "Bubble Gum with Forest Berries", "Strawberry Fresh with Melon", "Grape", "Green Apple", "Green Apple Kiwi", "Multifruit", "Raspberry Lemon"] },
-                { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/AEXfHiB.png", flavors: ["Кислый Малиновый Джем", "Сочная Груша с Зеленой Мятой", "Свежая Дикая Вишня с Красным Яблоком"] },
+                { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/AEXfHiB.png", flavors: ["Кислый Малиновый Джем", "Сочная Груша с Зеленой Мятой", "Свежая Дилая Вишня с Красным Яблоком"] },
                 { id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/G2PHtYz.png", flavors: ["Кислое Киви и Малина"] },
             ],
-            pod: [
-                // Пустая категория для примера
-            ],
+            pod: [],
             evaporators: [
                 { id: 13, name: "Smoant K-1", price: 300, image: "https://i.imgur.com/OVqOGLr.png", flavors: [] },
-                
             ],
             tanks: [
                { id: 14, name: "XROS Series", price: 330, image: "https://i.imgur.com/lpsrzAE.png", flavors: [] },
             ],
-            other: [
-                // Пустая категория для примера
-            ],
+            other: [],
         };
 
         // Категории
@@ -1548,8 +1547,10 @@
         const toastMessage = document.getElementById('toast-message');
         const developerCredits = document.getElementById('developer-credits');
         const flavorModal = document.getElementById('flavor-modal');
+        const flavorModalTitle = document.getElementById('flavor-modal-title');
         const closeFlavorModalBtn = document.getElementById('close-flavor-modal');
         const flavorSelect = document.getElementById('flavor-select');
+        const flavorSelectContainer = document.getElementById('flavor-select-container');
         const confirmFlavorBtn = document.getElementById('confirm-flavor');
         const managerButton = document.getElementById('manager-button');
         
@@ -1618,6 +1619,9 @@
                 products[category].forEach(product => {
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
+                    productCard.dataset.id = product.id;
+                    const buttonText = product.flavors && product.flavors.length > 0 ? 'Выбрать вкус' : 'В корзину';
+                    const buttonIcon = product.flavors && product.flavors.length > 0 ? 'fas fa-search' : 'fas fa-cart-plus';
                     productCard.innerHTML = `
                         <div class="product-img">
                             <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200?text=Изображение+отсутствует'">
@@ -1625,16 +1629,27 @@
                         </div>
                         <h3>${product.name}</h3>
                         <div class="price">${product.price}₽</div>
-                        <button class="add-to-cart" data-id="${product.id}"><i class="fas fa-cart-plus"></i> В корзину</button>
+                        <button class="add-to-cart" data-id="${product.id}"><i class="${buttonIcon}"></i> ${buttonText}</button>
                     `;
                     productsContainer.appendChild(productCard);
                 });
                 
-                // Добавляем обработчики для кнопок "В корзину"
+                // Добавляем обработчики для кликов по карточке и кнопке
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        // Если клик не по кнопке, всё равно открываем модал или добавляем
+                        if (!e.target.closest('.add-to-cart')) {
+                            const productId = parseInt(this.dataset.id);
+                            handleProductClick(productId);
+                        }
+                    });
+                });
+                
                 document.querySelectorAll('.add-to-cart').forEach(btn => {
-                    btn.addEventListener('click', function() {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation(); // Предотвращаем bubbling к карточке
                         const productId = parseInt(this.dataset.id);
-                        showFlavorModal(productId);
+                        handleProductClick(productId);
                     });
                 });
             } else {
@@ -1645,12 +1660,11 @@
                         <p>В этой категории пока нет товаров</p>
                     </div>
                 `;
-                
             }
         }
         
-        // Показать модал выбора вкуса
-        function showFlavorModal(productId) {
+        // Обработчик клика по продукту
+        function handleProductClick(productId) {
             // Находим продукт
             let productToAdd = null;
             for (const category in products) {
@@ -1663,17 +1677,25 @@
             
             if (!productToAdd) return;
             
-            currentProductForFlavor = productToAdd;
-            
-            // Если вкусов нет, добавляем сразу
-            if (!productToAdd.flavors || productToAdd.flavors.length === 0) {
+            if (productToAdd.flavors && productToAdd.flavors.length > 0) {
+                showFlavorModal(productToAdd);
+            } else {
                 addToCart(productToAdd, '');
-                return;
             }
+        }
+        
+        // Показать модал выбора вкуса
+        function showFlavorModal(product) {
+            currentProductForFlavor = product;
+            
+            // Динамичный заголовок модала
+            flavorModalTitle.textContent = `Выберите вкус для ${product.name}`;
+            
+            flavorSelectContainer.style.display = 'block';
             
             // Заполняем select вкусами
             flavorSelect.innerHTML = '';
-            productToAdd.flavors.forEach(flavor => {
+            product.flavors.forEach(flavor => {
                 const option = document.createElement('option');
                 option.value = flavor;
                 option.textContent = flavor;
@@ -1687,12 +1709,12 @@
         // Подтверждение выбора вкуса
         confirmFlavorBtn.addEventListener('click', function() {
             const selectedFlavor = flavorSelect.value;
-            if (selectedFlavor) {
-                addToCart(currentProductForFlavor, selectedFlavor);
-                flavorModal.classList.remove('active');
-            } else {
+            if (!selectedFlavor) {
                 showToast('Выберите вкус');
+                return;
             }
+            addToCart(currentProductForFlavor, selectedFlavor);
+            flavorModal.classList.remove('active');
         });
         
         // Закрытие модала вкуса
@@ -1700,7 +1722,18 @@
             flavorModal.classList.remove('active');
         });
         
+        // Исправление: предотвращаем закрытие при клике на сам select
+        flavorSelect.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Исправление: предотвращаем закрытие при клике на область select
+        flavorSelectContainer.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        
         flavorModal.addEventListener('click', function(e) {
+            // Закрываем только при клике на оверлей, а не на содержимое модала
             if (e.target === flavorModal) {
                 flavorModal.classList.remove('active');
             }
@@ -1717,7 +1750,9 @@
             cartContainer.classList.toggle('show');
         });
         
-        closeCartBtn.addEventListener('click', function() {
+        closeCartBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Предотвращаем bubbling
+            e.preventDefault(); // Предотвращаем default поведение
             cartContainer.classList.remove('show');
         });
         
@@ -1757,7 +1792,7 @@
             }, 300);
         }
         
-        // Обновление корзина
+        // Обновление корзины
         function updateCart() {
             // Обновляем бейдж
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -1771,7 +1806,7 @@
                 cartIcon.style.display = 'flex';
             }
             
-            // Обновляем содержимое корзина
+            // Обновляем содержимое корзины
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="empty-cart">
@@ -2082,7 +2117,6 @@
         }
         
         function hideDeveloperCredits() {
-            
             setTimeout(() => {
                 developerCredits.classList.add('hidden');
             }, 3000);
