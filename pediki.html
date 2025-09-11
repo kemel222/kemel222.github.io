@@ -769,7 +769,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
@@ -779,6 +779,7 @@
         }
 
         .modal-overlay.active {
+            display: flex;
             opacity: 1;
             visibility: visible;
         }
@@ -873,7 +874,7 @@
         .dark-theme .flavor-select select {
             border-color: #444;
             background-color: #2a2a2a;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24' fill='none' stroke='%23e6e6e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e6e6e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
         }
 
         .confirm-flavor {
@@ -1633,25 +1634,6 @@
                     `;
                     productsContainer.appendChild(productCard);
                 });
-                
-                // Добавляем обработчики для кликов по карточке и кнопке
-                document.querySelectorAll('.product-card').forEach(card => {
-                    card.addEventListener('click', function(e) {
-                        // Если клик не по кнопке, всё равно открываем модал или добавляем
-                        if (!e.target.closest('.add-to-cart')) {
-                            const productId = parseInt(this.dataset.id);
-                            handleProductClick(productId);
-                        }
-                    });
-                });
-                
-                document.querySelectorAll('.add-to-cart').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation(); // Предотвращаем bubbling к карточке
-                        const productId = parseInt(this.dataset.id);
-                        handleProductClick(productId);
-                    });
-                });
             } else {
                 // Если категория пустая
                 productsContainer.innerHTML = `
@@ -1832,32 +1814,6 @@
                         </div>
                     `;
                     cartItems.appendChild(cartItem);
-                });
-                
-                // Добавляем обработчики для кнопок +/-
-                document.querySelectorAll('.increase').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const key = this.dataset.key;
-                        const item = cart.find(item => item.key === key);
-                        if (item) {
-                            item.quantity += 1;
-                            updateCart();
-                        }
-                    });
-                });
-                
-                document.querySelectorAll('.decrease').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const key = this.dataset.key;
-                        const item = cart.find(item => item.key === key);
-                        if (item) {
-                            item.quantity -= 1;
-                            if (item.quantity === 0) {
-                                cart = cart.filter(i => i.key !== key);
-                            }
-                            updateCart();
-                        }
-                    });
                 });
             }
             
@@ -2122,6 +2078,53 @@
             }, 3000);
         }
         
+        // Event delegation для продуктов (исправление проблемы с обработчиками событий)
+        function initProductDelegation() {
+            categoryScreen.addEventListener('click', function(e) {
+                const addToCartBtn = e.target.closest('.add-to-cart');
+                if (addToCartBtn) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const productId = parseInt(addToCartBtn.dataset.id);
+                    handleProductClick(productId);
+                    return;
+                }
+
+                const productCard = e.target.closest('.product-card');
+                if (productCard) {
+                    const addToCartInCard = productCard.querySelector('.add-to-cart');
+                    if (!addToCartInCard || !addToCartInCard.contains(e.target)) {
+                        const productId = parseInt(productCard.dataset.id);
+                        handleProductClick(productId);
+                    }
+                }
+            });
+        }
+
+        // Event delegation для корзины (кнопки +/-)
+        function initCartDelegation() {
+            cartContainer.addEventListener('click', function(e) {
+                if (e.target.matches('.increase')) {
+                    const key = e.target.dataset.key;
+                    const item = cart.find(item => item.key === key);
+                    if (item) {
+                        item.quantity += 1;
+                        updateCart();
+                    }
+                } else if (e.target.matches('.decrease')) {
+                    const key = e.target.dataset.key;
+                    const item = cart.find(item => item.key === key);
+                    if (item) {
+                        item.quantity -= 1;
+                        if (item.quantity === 0) {
+                            cart = cart.filter(i => i.key !== key);
+                        }
+                        updateCart();
+                    }
+                }
+            });
+        }
+        
         // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
             updateCart();
@@ -2143,6 +2146,10 @@
             
             // Инициализация маски телефона
             initPhoneMask();
+            
+            // Инициализация делегации событий
+            initProductDelegation();
+            initCartDelegation();
             
             // Скрыть уведомление о разработке через 10 секунд
             hideDeveloperCredits();
