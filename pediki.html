@@ -1898,13 +1898,14 @@
 
             // Формируем сообщение
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = `🛒 НОВЫЙ ЗАКАЗ \n\n`;
+            let message = `🛒 ВАШ ЗАКАЗ \n\n`;
 
             // Контактная информация
             message += `👤 Имя: ${customerName.value}\n`;
             message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
 
-            // Дополнительная информация, если указана
+            // Дополнительная информация, если указක
+
             if (deliveryTime.value.trim()) {
                 message += `⏰ Удобное время: ${deliveryTime.value}\n`;
             }
@@ -1925,25 +1926,46 @@
             message += `💰 Итого к оплате: ${total}₽\n`;
             message += `🏪 Способ получения: Самовывоз`;
 
+            // Проверка длины сообщения
+            if (message.length > 4096) {
+                console.error('Сообщение слишком длинное:', message.length);
+                showToast('Ошибка: Слишком длинное сообщение');
+                isProcessing = false;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = 'Заказать <i class="fas fa-check"></i>';
+                return;
+            }
+
             const encodedMessage = encodeURIComponent(message);
-            const managerChatId = '@meta_manager_tymen'; // Или замените на числовой chat_id
+            const user = Telegram.WebApp.initDataUnsafe.user;
+            const chatId = user ? user.id : null;
+
+            // Проверка Telegram Web App и chat_id
+            if (!window.Telegram || !Telegram.WebApp || !chatId) {
+                console.error('Telegram Web App не инициализирован или отсутствует ID пользователя');
+                showToast('Ошибка: Запустите приложение через Telegram и начните диалог с ботом');
+                isProcessing = false;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.innerHTML = 'Заказать <i class="fas fa-check"></i>';
+                return;
+            }
 
             try {
-                // Отправляем сообщение от имени бота
+                // Отправляем сообщение пользователю
                 const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        chat_id: managerChatId, // Используем ID менеджера или группы
+                        chat_id: chatId, // Отправляем пользователю, который сделал заказ
                         text: message,
                         parse_mode: 'Markdown',
                         reply_markup: {
                             inline_keyboard: [[
                                 {
-                                    text: "Написать менеджеру",
-                                    url: `https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`
+                                    text: "Связаться с менеджером",
+                                    url: `https://t.me/${MANAGER_USERNAME}`
                                 }
                             ]]
                         }
@@ -1952,12 +1974,12 @@
 
                 const responseData = await response.json();
                 if (!response.ok || !responseData.ok) {
-                    console.error('Ошибка отправки сообщения:', responseData.description);
+                    console.error('Ошибка Telegram API:', responseData.description);
                     showToast(`Ошибка отправки заказа: ${responseData.description}`);
                     throw new Error(responseData.description);
                 }
 
-                // Открываем чат с менеджером
+                // Отправляем копию заказа менеджеру
                 if (window.Telegram && Telegram.WebApp) {
                     window.Telegram.WebApp.openTelegramLink(`https://t.me/${MANAGER_USERNAME}?text=${encodedMessage}`);
                 } else {
@@ -1972,10 +1994,10 @@
                 orderModal.classList.remove('active');
                 cartContainer.classList.remove('show');
 
-                showToast('Заказ оформлен! С вами свяжется менеджер.');
+                showToast('Заказ оформлен! Подтверждение отправлено в чат.');
             } catch (error) {
-                console.error('Ошибка сети:', error);
-                showToast('Ошибка сети при отправке заказа');
+                console.error('Ошибка сети:', error.message);
+                showToast(`Ошибка сети: ${error.message}`);
             } finally {
                 isProcessing = false;
                 submitOrderBtn.disabled = false;
