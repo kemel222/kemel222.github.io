@@ -440,6 +440,9 @@
             overflow: hidden;
             height: 100%;
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: productAppear 0.6s ease forwards;
         }
 
         .dark-theme .product-card {
@@ -1219,6 +1222,190 @@
                 font-size: 0.95rem;
             }
         }
+
+        /* Стили для системы скидок */
+        .discount-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+            animation: discountPulse 2s infinite, discountShimmer 3s infinite;
+            transform-origin: center;
+        }
+
+        @keyframes discountPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes discountShimmer {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 4px 15px rgba(255, 107, 107, 0.6); }
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-right: 8px;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .discount-price {
+            color: #ff6b6b;
+            font-weight: 800;
+            transform: scale(1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .discount-price {
+            transform: scale(1.05);
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px 0 12px;
+            flex-wrap: wrap;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item-price-discount {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item-old-price {
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .cart-item-discount-price {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .cart-item-discount {
+            font-size: 0.75rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            margin-top: 2px;
+        }
+
+        /* Анимация для добавления в корзину со скидкой */
+        @keyframes discountCartPulse {
+            0% { box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25); }
+            50% { box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4); }
+            100% { box-shadow: 0 4px 12px rgba(67, 97, 238, 0.25); }
+        }
+
+        .add-to-cart.discount {
+            animation: discountCartPulse 2s ease-in-out infinite;
+        }
+
+        /* Анимация появления товаров */
+        @keyframes productAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Анимация появления скидочных элементов */
+        .discount-appear {
+            animation: discountAppear 0.6s ease-out;
+        }
+
+        @keyframes discountAppear {
+            0% { 
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Стили для общего итога со скидкой */
+        .cart-summary {
+            padding: 15px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-theme .cart-summary {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .savings-badge {
+            background: linear-gradient(135deg, #4cd964, #2ecc71);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 10px;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        /* Анимация для баннеров со скидками */
+        .banner.discount-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(67, 97, 238, 0.2));
+            z-index: 1;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Анимация при наведении на товары со скидкой */
+        .product-card.discount-highlight:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Анимация для кнопки со скидкой */
+        .discount-btn-pulse {
+            animation: discountBtnPulse 2s infinite;
+        }
+
+        @keyframes discountBtnPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="light-theme">
@@ -1438,25 +1625,22 @@
         // Данные о товарах с реальными изображениями и вкусами
         const products = {
             disposables: [
-                { id: 1, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/LvzqSZM.png", flavors: ["Cranberry Grape", "Raspberry Darksparkle", "Vimbul Ice", "Watermelon Cherry", "Triple Berry", "Kiwi Passion Guava", "Blue Razz Blackberry", "Strawberry Raspberry"] },
+                { id: 1, name: "Waka 20000", price: 1400, image: "https://i.imgur.com/LvzqSZM.png", flavors: ["Cranberry Grape", "Raspberry Darksparkle", "Vimbul Ice", "Watermelon Cherry", "Triple Berry", "Kiwi Passion Guava", "Watermelon Chill", "Blue Razz Blackberry", "Strawberry Raspberry", "Strawberry Kiwi"] },
                 { id: 29, name: "Puffmi Flora 25000", price: 1400, image: "https://i.imgur.com/3MW3pIJ.png", flavors: ["Ванильное Мороженое", "Двойное Яблоко"] },
                 { id: 2, name: "Dojo pixel 25000", price: 900, image: "https://i.imgur.com/42lCezx.png", flavors: ["Pink Lemonade", "Watermelon Ice"] },
                 { id: 3, name: "Geek Bar Pulse X", price: 1300, image: "https://i.imgur.com/gZjFgMV.png", flavors: ["Кислый Боярышник Лёд"] },
-                { id: 26, name: "Ske Crystall B15000", price: 750, image: "https://i.imgur.com/agb0EW4.png", flavors: ["Кислое Яблоко","Кола","Кокос Ананас","Лимон Лайм","Клубника Арбуз","Мята"] },
+                { id: 26, name: "Ske Crystall B15000", price: 750, image: "https://i.imgur.com/agb0EW4.png", flavors: ["Кислое Яблоко","Манго","Вишня Лимон","Кола","Кокос Ананас","Лимон Лайм","Клубника Арбуз","Мята"] },
             ],
             "snus-and-plates": [
                 { id: 23, name: "IceBurn Ghetto", price: 400, image: "https://i.imgur.com/bV4Ooym.png", flavors: ["Перечная Мята"] },
             ],
             liquids: [
                 { id: 4, name: "Hotspot & Podonki", price: 400, image: "https://i.imgur.com/E6esQHe.png", flavors: ["Клубничное Мороженое", "Мороженое с Киви", "Освежающий Ананас"] },
-                //{ id: 5, name: "ИндивиDUALL", price: 300, image: "https://i.imgur.com/jmQMip1.png", flavors: ["Кислое Манго Клубника"] },
                 { id: 6, name: "Podonki Podgon", price: 350, image: "https://i.imgur.com/ChfulNM.png", flavors: ["Виноград холлс", "Грейпфрутовый лимонад", "Зеленый Манго", "Кокос Малина", "Смородина холлс", "Персиковый Йогурт"] },
-                //{ id: 7, name: "Podonki Light", price: 350, image: "https://i.imgur.com/EbPfgWG.png", flavors: ["Мятный Арбуз"] },
                 { id: 8, name: "Level One", price: 350, image: "https://i.imgur.com/Vt5sC9b.png", flavors: ["Mango Coconut", "Fruit Gummy Bears", "Banana Milk", "Peach Yogurt"] },
                 { id: 9, name: "Catswill", price: 420, image: "https://i.imgur.com/V0xMje5.png", flavors: [ "Имбирный Лимонад с Малиной", "Мятная Жвачка"] },
-                { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/9kP5ATk.png", flavors: ["Grape", "Multifruit", "Raspberry Lemon"] },
+                { id: 10, name: "Rell", price: 350, image: "https://i.imgur.com/9kP5ATk.png", flavors: ["Strawberry", "Grape", "Multifruit", "Raspberry Lemon"] },
                 { id: 11, name: "Isterika Mix", price: 350, image: "https://i.imgur.com/TEwdgPo.png", flavors: ["Кислый Малиновый Джем", "Сочная Груша с Зеленой Мятой"] },
-                //{ id: 12, name: "Кислая Злая монашка", price: 450, image: "https://i.imgur.com/LBh4Ddd.png", flavors: ["Кислое Киви и Малина"] },
                 { id: 28, name: "Rick And Morty Bad Ice", price: 370, image: "https://i.imgur.com/DlLlIP3.png", flavors: ["Малиновый мармелад", "Фруктовый Тик Так","Малина Лайм","Черника Арбуз"] },
                 { id: 27, name: "Annima Love", price: 350, image: "https://i.imgur.com/9SGPLi8.png", flavors: ["Ледяной виноград", "Мохито с клубникой", "Черника гранат","Кислая вишня"] },
             ],
@@ -1469,7 +1653,7 @@
                 { id: 19, name: "Smoant P-1", price: 300, image: "https://i.imgur.com/frBZ6pN.png", flavors: [] },
                 { id: 20, name: "Smoant S-1", price: 300, image: "https://i.imgur.com/CM6YQ17.png", flavors: [] },
                 { id: 21, name: "Aegis P-Series", price: 330, image: "https://i.imgur.com/FyPIAuZ.png", flavors: [] },
-                //{ id: 22, name: "Manto Aio", price: 300, image: "https://i.imgur.com/4OdcbvL.png", flavors: [] },
+                { id: 22, name: "Manto Aio", price: 300, image: "https://i.imgur.com/4OdcbvL.png", flavors: [] },
                 { id: 31, name: "Aegis B-Series", price: 330, image: "https://i.imgur.com/2df0gwV.png", flavors: [] },
             ],
             tanks: [
@@ -1520,6 +1704,31 @@
             }
         ];
 
+        // Расширенная система скидок
+        const discounts = {
+            // Скидки на конкретные товары по ID
+            productDiscounts: {
+                1:10,
+                29:15,
+                26:20,
+            },
+            
+            // Скидки на категории
+            categoryDiscounts: {
+              
+            },
+            
+            // Специальные акции
+            specialDiscounts: {
+              
+            },
+
+            // Сезонные скидки
+            seasonalDiscounts: {
+               
+            }
+        };
+
         // Корзина
         let cart = [];
         let isProcessing = false;
@@ -1535,6 +1744,7 @@
         
         // Текущий продукт для выбора вкуса
         let currentProductForFlavor = null;
+        let currentProductCategory = null;
         
         // Элементы DOM
         const body = document.body;
@@ -1614,6 +1824,13 @@
                 banner.querySelector('.banner-btn').textContent = bannerData.button;
                 banner.dataset.category = bannerData.category;
                 
+                // Добавляем класс для баннера со скидкой
+                if (bannerData.discount) {
+                    banner.classList.add('discount-banner');
+                } else {
+                    banner.classList.remove('discount-banner');
+                }
+                
                 // Устанавливаем фоновое изображение
                 if (bannerData.image) {
                     banner.style.backgroundImage = `url(${bannerData.image})`;
@@ -1627,6 +1844,86 @@
             }, 500);
         }
         
+        // Функция для получения цены со скидкой
+        function getDiscountedPrice(product, category = null) {
+            const basePrice = product.price;
+            let discount = 0;
+            
+            // Проверяем скидку на конкретный товар
+            if (discounts.productDiscounts[product.id]) {
+                discount = Math.max(discount, discounts.productDiscounts[product.id]);
+            }
+            
+            // Проверяем скидку на категорию
+            if (category && discounts.categoryDiscounts[category]) {
+                discount = Math.max(discount, discounts.categoryDiscounts[category]);
+            }
+            
+            // Проверяем специальные акции (например, в выходные)
+            const today = new Date();
+            if (today.getDay() === 0 || today.getDay() === 6) { // 0 - воскресенье, 6 - суббота
+                discount = Math.max(discount, discounts.specialDiscounts.weekend);
+            }
+            
+            // Проверяем сезонные скидки
+            const month = today.getMonth();
+            let season = '';
+            if (month >= 2 && month <= 4) season = 'spring';
+            else if (month >= 5 && month <= 7) season = 'summer';
+            else if (month >= 8 && month <= 10) season = 'autumn';
+            else season = 'winter';
+            
+            if (discounts.seasonalDiscounts[season]) {
+                discount = Math.max(discount, discounts.seasonalDiscounts[season]);
+            }
+
+            // Ограничиваем максимальную скидку 50%
+            discount = Math.min(discount, 50);
+            
+            if (discount > 0) {
+                const discountedPrice = Math.round(basePrice * (1 - discount / 100));
+                return {
+                    original: basePrice,
+                    discounted: discountedPrice,
+                    discount: discount,
+                    hasDiscount: true
+                };
+            }
+            
+            return {
+                original: basePrice,
+                discounted: basePrice,
+                discount: 0,
+                hasDiscount: false
+            };
+        }
+
+        // Функция для отображения цены со скидкой
+        function renderPrice(product, category = null) {
+            const priceInfo = getDiscountedPrice(product, category);
+            
+            if (priceInfo.hasDiscount) {
+                return `
+                    <div class="price-container discount-appear">
+                        <span class="old-price">${priceInfo.original}₽</span>
+                        <span class="discount-price">${priceInfo.discounted}₽</span>
+                    </div>
+                `;
+            } else {
+                return `<div class="price">${priceInfo.original}₽</div>`;
+            }
+        }
+
+        // Функция для отображения бейджа скидки
+        function renderDiscountBadge(product, category = null) {
+            const priceInfo = getDiscountedPrice(product, category);
+            
+            if (priceInfo.hasDiscount) {
+                return `<div class="discount-badge discount-appear">-${priceInfo.discount}%</div>`;
+            }
+            return '';
+        }
+        
         // Показать категорию
         function showCategory(category) {
             mainScreen.classList.remove('active');
@@ -1636,27 +1933,39 @@
             productsContainer.innerHTML = '';
             
             if (products[category] && products[category].length > 0) {
-                products[category].forEach(product => {
+                products[category].forEach((product, index) => {
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
                     productCard.dataset.id = product.id;
+                    
+                    // Добавляем задержку для анимации появления
+                    productCard.style.animationDelay = `${index * 0.1}s`;
+                    
                     const buttonText = product.flavors && product.flavors.length > 0 ? 'Выбрать вкус' : 'В корзину';
                     const buttonIcon = product.flavors && product.flavors.length > 0 ? 'fas fa-search' : 'fas fa-cart-plus';
+                    const priceInfo = getDiscountedPrice(product, category);
+                    const buttonClass = priceInfo.hasDiscount ? 'add-to-cart discount' : 'add-to-cart';
+                    
+                    // Добавляем класс для товаров со скидкой
+                    if (priceInfo.hasDiscount) {
+                        productCard.classList.add('discount-highlight');
+                    }
+                    
                     productCard.innerHTML = `
                         <div class="product-img">
                             <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200?text=Изображение+отсутствует'">
                             ${category === 'new' ? '<span class="new-badge">NEW</span>' : ''}
+                            ${renderDiscountBadge(product, category)}
                         </div>
                         <h3>${product.name}</h3>
-                        <div class="price">${product.price}₽</div>
-                        <button class="add-to-cart" data-id="${product.id}"><i class="${buttonIcon}"></i> ${buttonText}</button>
+                        ${renderPrice(product, category)}
+                        <button class="${buttonClass}" data-id="${product.id}"><i class="${buttonIcon}"></i> ${buttonText}</button>
                     `;
                     productsContainer.appendChild(productCard);
                 });
             } else {
-                // Если категория пустая
                 productsContainer.innerHTML = `
-                    <div class="empty-state">
+                    <div class="empty-state discount-appear">
                         <i class="fas fa-box-open"></i>
                         <p>В этой категории пока нет товаров</p>
                     </div>
@@ -1666,12 +1975,15 @@
         
         // Обработчик клика по продукту
         function handleProductClick(productId) {
-            // Находим продукт
+            // Находим продукт и его категорию
             let productToAdd = null;
+            let productCategory = null;
+            
             for (const category in products) {
                 const product = products[category].find(p => p.id === productId);
                 if (product) {
                     productToAdd = product;
+                    productCategory = category;
                     break;
                 }
             }
@@ -1679,15 +1991,16 @@
             if (!productToAdd) return;
             
             if (productToAdd.flavors && productToAdd.flavors.length > 0) {
-                showFlavorModal(productToAdd);
+                showFlavorModal(productToAdd, productCategory);
             } else {
-                addToCart(productToAdd, '');
+                addToCart(productToAdd, '', productCategory);
             }
         }
         
         // Показать модал выбора вкуса
-        function showFlavorModal(product) {
+        function showFlavorModal(product, category) {
             currentProductForFlavor = product;
+            currentProductCategory = category; // Сохраняем категорию для применения скидки
             
             // Динамичный заголовок модала
             flavorModalTitle.textContent = `Выберите вкус для ${product.name}`;
@@ -1714,7 +2027,7 @@
                 showToast('Выберите вкус');
                 return;
             }
-            addToCart(currentProductForFlavor, selectedFlavor);
+            addToCart(currentProductForFlavor, selectedFlavor, currentProductCategory);
             flavorModal.classList.remove('active');
         });
         
@@ -1758,7 +2071,9 @@
         });
         
         // Добавление в корзину
-        function addToCart(product, flavor) {
+        function addToCart(product, flavor, category = null) {
+            const priceInfo = getDiscountedPrice(product, category);
+            
             // Уникальный ключ для товара с вкусом
             const itemKey = `${product.id}-${flavor}`;
             
@@ -1772,7 +2087,9 @@
                     key: itemKey,
                     id: product.id,
                     name: product.name,
-                    price: product.price,
+                    price: priceInfo.discounted, // Используем цену со скидкой
+                    originalPrice: priceInfo.original, // Сохраняем оригинальную цену
+                    discount: priceInfo.discount, // Сохраняем размер скидки
                     flavor: flavor,
                     quantity: 1
                 });
@@ -1783,14 +2100,23 @@
             // Показываем корзину при добавлении
             cartContainer.classList.add('show');
             
-            // Показываем уведомление
-            showToast('Товар добавлен в корзину');
+            // Специальное уведомление для товаров со скидкой
+            if (priceInfo.hasDiscount) {
+                showToast(`Товар добавлен в корзину! Вы экономите ${Math.round(priceInfo.original - priceInfo.discounted)}₽`);
+            } else {
+                showToast('Товар добавлен в корзину');
+            }
             
-            // Анимация добавления
-            cartIcon.style.transform = 'scale(1.2)';
+            // Улучшенная анимация добавления
+            cartIcon.style.transform = 'scale(1.3) rotate(10deg)';
             setTimeout(() => {
-                cartIcon.style.transform = 'scale(1)';
+                cartIcon.style.transform = 'scale(1) rotate(0deg)';
             }, 300);
+            
+            // Вибрация (если поддерживается)
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
         }
         
         // Обновление корзины
@@ -1798,6 +2124,12 @@
             // Обновляем бейдж
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             cartBadge.textContent = totalItems;
+            
+            // Анимация обновления бейджа
+            cartBadge.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartBadge.style.transform = 'scale(1)';
+            }, 300);
             
             // Показываем/скрываем иконку корзины
             if (totalItems === 0) {
@@ -1810,21 +2142,31 @@
             // Обновляем содержимое корзины
             if (cart.length === 0) {
                 cartItems.innerHTML = `
-                    <div class="empty-cart">
+                    <div class="empty-cart discount-appear">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Корзина пуста</p>
                     </div>
                 `;
             } else {
                 cartItems.innerHTML = '';
-                cart.forEach(item => {
+                cart.forEach((item, index) => {
                     const cartItem = document.createElement('div');
-                    cartItem.className = 'cart-item';
+                    cartItem.className = 'cart-item discount-appear';
+                    cartItem.style.animationDelay = `${index * 0.05}s`;
+                    
+                    const priceDisplay = item.discount > 0 
+                        ? `<div class="cart-item-price-discount">
+                               <span class="cart-item-old-price">${item.originalPrice}₽</span>
+                               <span class="cart-item-discount-price">${item.price}₽</span>
+                           </div>`
+                        : `<div class="cart-item-price">${item.price}₽</div>`;
+                    
                     cartItem.innerHTML = `
                         <div class="cart-item-info">
                             <div class="cart-item-name">${item.name}</div>
                             ${item.flavor ? `<div class="cart-item-flavor">Вкус: ${item.flavor}</div>` : ''}
-                            <div class="cart-item-price">${item.price}₽ x ${item.quantity}</div>
+                            ${item.discount > 0 ? `<div class="cart-item-discount">Скидка: -${item.discount}%</div>` : ''}
+                            ${priceDisplay}
                         </div>
                         <div class="cart-item-quantity">
                             <button class="quantity-btn decrease" data-key="${item.key}">-</button>
@@ -1834,11 +2176,36 @@
                     `;
                     cartItems.appendChild(cartItem);
                 });
+                
+                // Добавляем информацию об экономии
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const originalTotal = cart.reduce((sum, item) => sum + (item.originalPrice * item.quantity), 0);
+                const totalDiscount = originalTotal - total;
+                
+                if (totalDiscount > 0) {
+                    const savingsElement = document.createElement('div');
+                    savingsElement.className = 'savings-badge discount-appear';
+                    savingsElement.innerHTML = `💰 Вы экономите: ${totalDiscount}₽`;
+                    cartItems.appendChild(savingsElement);
+                }
             }
             
-            // Обновляем общую сумму
+            // Обновляем общую сумму (учитываем скидки)
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `${total}₽`;
+            const originalTotal = cart.reduce((sum, item) => sum + (item.originalPrice * item.quantity), 0);
+            const totalDiscount = originalTotal - total;
+            
+            // Показываем общую скидку если есть
+            if (totalDiscount > 0) {
+                cartTotal.innerHTML = `
+                    <div class="discount-appear">
+                        <div style="text-decoration: line-through; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 5px;">${originalTotal}₽</div>
+                        <div style="font-size: 1.25rem; font-weight: 800;">${total}₽</div>
+                    </div>
+                `;
+            } else {
+                cartTotal.textContent = `${total}₽`;
+            }
         }
         
         // Оформление заказа - открытие модального окна
@@ -1903,14 +2270,16 @@
 
             // Формируем сообщение
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const originalTotal = cart.reduce((sum, item) => sum + (item.originalPrice * item.quantity), 0);
+            const totalDiscount = originalTotal - total;
+            
             let message = `🛒 ВАШ ЗАКАЗ \n\n`;
 
             // Контактная информация
             message += `👤 Имя: ${customerName.value}\n`;
             message += `📞 Телефон: +7${formatPhoneForMessage(customerPhone.value)}\n`;
 
-            // Дополнительная информация, если указක
-
+            // Дополнительная информация, если указана
             if (deliveryTime.value.trim()) {
                 message += `⏰ Удобное время: ${deliveryTime.value}\n`;
             }
@@ -1929,6 +2298,12 @@
 
             // Итоговая сумма
             message += `💰 Итого к оплате: ${total}₽\n`;
+            
+            // Показываем экономию, если есть
+            if (totalDiscount > 0) {
+                message += `🎉 Экономия: ${totalDiscount}₽\n`;
+            }
+            
             message += `🏪 Способ получения: Самовывоз`;
 
             // Проверка длины сообщения
