@@ -1706,22 +1706,19 @@
 
         // Расширенная система скидок
         const discounts = {
-            // Скидки на конкретные товары по ID
             productDiscounts: {
                 1:10,
                 29:15,
                 26:34,
-                4:10,
             },
             
             // Скидки на категории
             categoryDiscounts: {
-              
             },
             
             // Специальные акции
             specialDiscounts: {
-              
+            //    'weekend': 0,         // 5% дополнительная скидка в выходные
             },
 
             // Сезонные скидки
@@ -1862,9 +1859,9 @@
             
             // Проверяем специальные акции (например, в выходные)
             const today = new Date();
-            if (today.getDay() === 0 || today.getDay() === 6) { // 0 - воскресенье, 6 - суббота
-                discount = Math.max(discount, discounts.specialDiscounts.weekend);
-            }
+            //if (today.getDay() === 0 || today.getDay() === 6) { // 0 - воскресенье, 6 - суббота
+                discount = Math.max(discount, 0);
+            //}
             
             // Проверяем сезонные скидки
             const month = today.getMonth();
