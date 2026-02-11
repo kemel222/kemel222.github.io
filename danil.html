@@ -2,11 +2,433 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С 14 февраля, любимая!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>С 14 февраля, Варя! 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Marck+Script&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2d0515 30%, #1a0a1e 60%, #0d0a1a 100%);
+            color: #fff;
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Floating hearts background — GPU-accelerated */
+        .hearts-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-float {
+            position: absolute;
+            bottom: -60px;
+            opacity: 0;
+            will-change: transform, opacity;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+            10%  { opacity: 0.6; }
+            90%  { opacity: 0.3; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+
+        /* Glowing orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+        .glow-orb.orb1 {
+            width: 300px; height: 300px;
+            background: rgba(220, 40, 80, 0.15);
+            top: 10%; left: -50px;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        .glow-orb.orb2 {
+            width: 250px; height: 250px;
+            background: rgba(180, 50, 120, 0.12);
+            bottom: 20%; right: -40px;
+            animation: orbFloat 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50%      { transform: translate(30px, -40px); }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 40px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        /* Animated main heart */
+        .main-heart {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+            animation: heartPulse 1.2s ease-in-out infinite;
+        }
+
+        .main-heart svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(220, 40, 80, 0.6))
+                    drop-shadow(0 0 60px rgba(220, 40, 80, 0.3));
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            15%      { transform: scale(1.15); }
+            30%      { transform: scale(1); }
+            45%      { transform: scale(1.1); }
+            60%      { transform: scale(1); }
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Marck Script', cursive;
+            font-size: 2.4rem;
+            text-align: center;
+            line-height: 1.3;
+            background: linear-gradient(135deg, #ff6b8a, #ff8fa3, #ffc2d1, #ff8fa3, #ff6b8a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.15rem;
+            font-style: italic;
+            color: rgba(255, 200, 210, 0.8);
+            text-align: center;
+            line-height: 1.6;
+            max-width: 340px;
+        }
+
+        /* Divider */
+        .divider {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 138, 0.6), transparent);
+            border-radius: 2px;
+        }
+
+        /* Message card */
+        .message-card {
+            background: linear-gradient(145deg,
+                rgba(255, 255, 255, 0.06),
+                rgba(255, 107, 138, 0.08),
+                rgba(255, 255, 255, 0.04));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 107, 138, 0.15);
+            border-radius: 20px;
+            padding: 28px 24px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 180, 200, 0.4), transparent);
+        }
+
+        .message-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 230, 235, 0.9);
+            text-align: center;
+        }
+
+        .message-card .name-highlight {
+            font-family: 'Marck Script', cursive;
+            font-size: 1.5rem;
+            color: #ff8fa3;
+            display: inline;
+        }
+
+        /* Video section */
+        .video-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .video-label {
+            font-family: 'Marck Script', cursive;
+            font-size: 1.3rem;
+            color: rgba(255, 180, 200, 0.7);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 107, 138, 0.2);
+            box-shadow: 0 8px 32px rgba(220, 40, 80, 0.15),
+                        0 0 60px rgba(220, 40, 80, 0.05);
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Bottom message */
+        .bottom-msg {
+            font-family: 'Marck Script', cursive;
+            font-size: 1.6rem;
+            text-align: center;
+            color: #ff8fa3;
+            opacity: 0.9;
+            padding-top: 10px;
+        }
+
+        /* Sparkle dots */
+        .sparkles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50%      { opacity: 0.8; transform: scale(1); }
+        }
+
+        /* Fade-in animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.2s; }
+        .fade-in:nth-child(2) { animation-delay: 0.5s; }
+        .fade-in:nth-child(3) { animation-delay: 0.8s; }
+        .fade-in:nth-child(4) { animation-delay: 1.0s; }
+        .fade-in:nth-child(5) { animation-delay: 1.2s; }
+        .fade-in:nth-child(6) { animation-delay: 1.5s; }
+        .fade-in:nth-child(7) { animation-delay: 1.8s; }
+        .fade-in:nth-child(8) { animation-delay: 2.1s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* iPhone 13 Pro specific (390px logical width) */
+        @media screen and (max-width: 430px) {
+            .container {
+                padding: 30px 16px 50px;
+                gap: 22px;
+            }
+            .main-heart {
+                width: 80px; height: 80px;
+            }
+            .title {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.05rem;
+            }
+            .message-card {
+                padding: 22px 18px;
+            }
+            .message-card p {
+                font-size: 1rem;
+            }
+            .glow-orb.orb1 {
+                width: 200px; height: 200px;
+                filter: blur(60px);
+            }
+            .glow-orb.orb2 {
+                width: 180px; height: 180px;
+                filter: blur(60px);
+            }
+        }
+
+        /* Safe area for notch */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            .container {
+                padding-top: calc(30px + env(safe-area-inset-top));
+                padding-bottom: calc(40px + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Reduce motion for accessibility / performance */
+        @media (prefers-reduced-motion: reduce) {
+            .heart-float, .sparkle {
+                animation: none !important;
+                display: none;
+            }
+            .main-heart {
+                animation: none;
+            }
+        }
+    </style>
+</head>
 <body>
-    <div class = "container" style = "text-align: center;">
-        <iframe src="https://vkvideo.ru/video_ext.php?oid=-235927901&id=456239017&hash=39fb7a2867be946f&hd=3" width="1280" height="720" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+
+    <!-- Ambient glow -->
+    <div class="glow-orb orb1"></div>
+    <div class="glow-orb orb2"></div>
+
+    <!-- Floating hearts (created via JS, limited count for performance) -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Sparkles -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- Main content -->
+    <div class="container">
+
+        <!-- Heart icon -->
+        <div class="main-heart fade-in">
+            <svg viewBox="0 0 24 24" fill="none">
+                <defs>
+                    <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ff6b8a"/>
+                        <stop offset="50%" stop-color="#ff3d6e"/>
+                        <stop offset="100%" stop-color="#e0245e"/>
+                    </linearGradient>
+                </defs>
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                         2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                         C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                         c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                      fill="url(#hg)"/>
+            </svg>
+        </div>
+
+        <!-- Title -->
+        <h1 class="title fade-in">С Днём Святого Валентина,<br>Варенька!</h1>
+
+        <!-- Subtitle -->
+        <p class="subtitle fade-in">14 февраля — день, когда можно сказать<br>то, что чувствуешь каждый день</p>
+
+        <div class="divider fade-in"></div>
+
+        <!-- Message -->
+        <div class="message-card fade-in">
+            <p>
+                <span class="name-highlight">Варя</span>, ты появилась в моей жизни совсем недавно, но уже успела сделать её ярче и теплее. Каждый день рядом с тобой — как маленький праздник. Я рад, что мы вместе, и хочу, чтобы таких дней было бесконечно много.
+                <br><br>
+                Ты — лучшее, что случилось со мной. 💗
+            </p>
+        </div>
+
+        <div class="divider fade-in"></div>
+
+        <!-- Video -->
+        <div class="video-section fade-in">
+            <span class="video-label">Специально для тебя ✨</span>
+            <div class="video-wrapper">
+                <iframe
+                    src="https://vkvideo.ru/video_ext.php?oid=-235927901&id=456239017&hash=39fb7a2867be946f&hd=2"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- Bottom -->
+        <p class="bottom-msg fade-in">С любовью, твой ❤️</p>
+
     </div>
+
+    <script>
+        // Performance: limit particles on mobile
+        const isMobile = window.innerWidth <= 430;
+        const HEART_COUNT = isMobile ? 8 : 15;
+        const SPARKLE_COUNT = isMobile ? 12 : 25;
+
+        // Create floating hearts
+        const heartsBg = document.getElementById('heartsBg');
+        const heartSVG = `<svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="rgba(255,107,138,0.5)"/></svg>`;
+
+        for (let i = 0; i < HEART_COUNT; i++) {
+            const el = document.createElement('div');
+            el.className = 'heart-float';
+            el.innerHTML = heartSVG;
+            el.style.left = Math.random() * 100 + '%';
+            el.style.animationDuration = (8 + Math.random() * 10) + 's';
+            el.style.animationDelay = (Math.random() * 12) + 's';
+            el.style.fontSize = (10 + Math.random() * 14) + 'px';
+            heartsBg.appendChild(el);
+        }
+
+        // Create sparkles
+        const sparklesEl = document.getElementById('sparkles');
+        for (let i = 0; i < SPARKLE_COUNT; i++) {
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.animationDelay = (Math.random() * 5) + 's';
+            s.style.animationDuration = (2 + Math.random() * 3) + 's';
+            sparklesEl.appendChild(s);
+        }
+    </script>
 </body>
 </html>
